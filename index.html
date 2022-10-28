@@ -14,9 +14,16 @@
             <h1>Food Price and Poverty Trend in the World</h1>
         </header>
         <div class="year_selection">Chose Year:
-            <button>2000</button>
-            <button>2010</button>
-            <button autofocus>2020</button>
+            <form class="formstyle" id="form">
+                <input type="radio" name="year" value="2000" id="2000">
+                <label for="2000" class="yearButton">2000</label>
+                
+                <input type="radio" name="year" value="2010" id="2010">
+                <label for="2010" class="yearButton">2010</label>
+                
+                <input type="radio" name="year" value="2020" id="2020" checked>
+                <label for="2020" class="yearButton">2020</label>
+            </form>
         </div>
         <div id="container" class="svg-container">
 
