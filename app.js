@@ -35,43 +35,90 @@ setTimeout(() => {
 
 */
 
+const maxWidth = 800;
+const maxHeight = 700;
+const lineLength = 300;
+const incline = 0.5235987756;
+
 d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_poverty.csv")
     .then(function(this_data){
-        let svg = d3.select('#svg1')
-                    .attr('width',1000)
-                    .attr('height',1000)
+        let svg = d3.select('div#container')
+                    .append('svg')
+                    .attr('width', maxWidth)
+                    .attr('height', maxHeight)
                     .style('background-color', 'white'); //#fde0dd
 
-        svg.append('line')
+        /// LINE 1 ///
+        let line1 = svg.append('g')
+                        .attr('transform', function(d,i){
+                            return 'translate(0,0)';
+                        });
+        line1.append('line')
             .style('stroke','#e7e1ef')
             .style('stroke-width',2)
-            .attr('x1',500)
-            .attr('y1',500)
-            .attr('x2',500)
-            .attr('y2',100);
-
-        svg.append('line')
-            .style('stroke','#e7e1ef')
-            .style('stroke-width',2)
-            .attr('x1',500)
-            .attr('y1',500)
-            .attr('x2',50)
-            .attr('y2',750);
+            .attr('x1',maxWidth/2)
+            .attr('y1',maxHeight/2)
+            .attr('x2',maxWidth/2)
+            .attr('y2',maxHeight/2-lineLength);
+        line1.append('text')
+            .attr('x',maxWidth/2-30)
+            .attr('y',maxHeight/2-lineLength-15)
+            .attr('stroke','black')
+            .attr('font-family','sans-serif')
+            .attr('font-size','18px')
+            .text('Country A');
         
-        svg.append('line')
+        /// LINE 2 ///
+        let line2 = svg.append('g')
+                        .attr('transform', function(d,i){
+                            return 'translate(0,0)';
+                        });
+        line2.append('line')
             .style('stroke','#e7e1ef')
             .style('stroke-width',2)
-            .attr('x1',500)
-            .attr('y1',500)
-            .attr('x2',950)
-            .attr('y2',750);
+            .attr('x1',maxWidth/2)
+            .attr('y1',maxHeight/2)
+            .attr('x2',maxWidth/2-(lineLength*Math.cos(incline)))
+            .attr('y2',maxHeight/2+(Math.sqrt(Math.pow(lineLength,2)-Math.pow(lineLength*Math.cos(incline),2))));
+        line2.append('text')
+            .attr('x',maxWidth/2-(lineLength*Math.cos(incline))-40)
+            .attr('y',maxHeight/2+(Math.sqrt(Math.pow(lineLength,2)-Math.pow(lineLength*Math.cos(incline),2)))+30)
+            .attr('stroke','black')
+            .attr('font-family','sans-serif')
+            .attr('font-size','18px')
+            .text('Country B');
         
-        svg.append('circle')
+        /// LINE 3 ///
+        let line3 = svg.append('g')
+                        .attr('transform', function(d,i){
+                            return 'translate(0,0)';
+                        });
+        line3.append('line')
+            .style('stroke','#e7e1ef')
+            .style('stroke-width',2)
+            .attr('x1',maxWidth/2)
+            .attr('y1',maxHeight/2)
+            .attr('x2',maxWidth/2+(lineLength*Math.cos(incline)))
+            .attr('y2',maxHeight/2+(Math.sqrt(Math.pow(lineLength,2)-Math.pow(lineLength*Math.cos(incline),2))));
+        line3.append('text')
+            .attr('x',maxWidth/2+(lineLength*Math.cos(incline))+10)
+            .attr('y',maxHeight/2+(Math.sqrt(Math.pow(lineLength,2)-Math.pow(lineLength*Math.cos(incline),2)))+30)
+            .attr('stroke','black')
+            .attr('font-family','sans-serif')
+            .attr('font-size','18px')
+            .text('Country C');
+        
+        /// POVERTY CIRCLE LINE ///
+        let povertyLine = svg.append('g')
+            .attr('transform', function(d,i){
+                return 'translate(0,0)';
+            });
+        povertyLine.append('circle')
             .style('stroke','black')
             .style('stroke-width',1)
             .style('stroke-dasharray',15)
             .style('fill','transparent')
-            .attr('r',150)
-            .attr('cx',500)
-            .attr('cy',500);
+            .attr('r',lineLength/4)
+            .attr('cx',maxWidth/2)
+            .attr('cy',maxHeight/2);
     });
