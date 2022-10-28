@@ -12,12 +12,23 @@ h1 {
 }
 
 .year_selection button {
-    background-color: burlywood;
-    border: 1px solid black;
+    background-color: white;
+    border-radius: 20px;
     color: black;
+    text-align: center;
     padding: 10px 24px;
     margin-right: 15px;
     margin-left: 15px;
+}
+
+.year_selection button:hover {
+    background-color: rgb(52, 48, 48);
+    color: white;
+}
+
+.year_selection button:active {
+    background-color: black;
+    color: white;
 }
 
 .svg-container {
