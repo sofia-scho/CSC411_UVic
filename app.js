@@ -37,10 +37,41 @@ setTimeout(() => {
 
 d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_poverty.csv")
     .then(function(this_data){
-        d3.select('div')
-            .selectAll('p')
-            .data(this_data)
-            .enter()
-            .append('p')
-            .text(data => data.Entity);
+        let svg = d3.select('#svg1')
+                    .attr('width',1000)
+                    .attr('height',1000)
+                    .style('background-color', 'white'); //#fde0dd
+
+        svg.append('line')
+            .style('stroke','#e7e1ef')
+            .style('stroke-width',2)
+            .attr('x1',500)
+            .attr('y1',500)
+            .attr('x2',500)
+            .attr('y2',100);
+
+        svg.append('line')
+            .style('stroke','#e7e1ef')
+            .style('stroke-width',2)
+            .attr('x1',500)
+            .attr('y1',500)
+            .attr('x2',50)
+            .attr('y2',750);
+        
+        svg.append('line')
+            .style('stroke','#e7e1ef')
+            .style('stroke-width',2)
+            .attr('x1',500)
+            .attr('y1',500)
+            .attr('x2',950)
+            .attr('y2',750);
+        
+        svg.append('circle')
+            .style('stroke','black')
+            .style('stroke-width',1)
+            .style('stroke-dasharray',15)
+            .style('fill','transparent')
+            .attr('r',150)
+            .attr('cx',500)
+            .attr('cy',500);
     });
