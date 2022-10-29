@@ -13,31 +13,62 @@
         <header>
             <h1>Food Price and Poverty Trend in the World</h1>
         </header>
-        <div class="year_selection">Chose Year:
-            <form class="formstyle" id="year_form">
-                <input type="radio" name="year" value="2000" id="2000">
-                <label for="2000" class="yearButton">2000</label>
-                
-                <input type="radio" name="year" value="2010" id="2010">
-                <label for="2010" class="yearButton">2010</label>
-                
-                <input type="radio" name="year" value="2020" id="2020" checked>
-                <label for="2020" class="yearButton">2020</label>
-            </form>
-        </div>
-        <div class="food_selection">Chose Food Item:
-            <form class="formstyle" id="food_form">
-                <input type="checkbox" name="food" value="rice" id="rice" checked>
-                <label for="rice" class="foodButton">rice</label>
-                
-                <input type="checkbox" name="food" value="apple" id="apple" checked>
-                <label for="apple" class="foodButton">apple</label>
-                
-                <input type="checkbox" name="food" value="egg" id="egg">
-                <label for="egg" class="foodButton">egg</label>
-            </form>
-        </div>
-        <div id="container" class="svg-container">
+        <div class="mainLayout">
+            <div>
+                <div class="year_selection">Choose Year:
+                    <form class="formstyle" id="year_form">
+                        <input type="radio" name="year" value="2000" id="2000">
+                        <label for="2000" class="yearButton">2000</label>
+                        
+                        <input type="radio" name="year" value="2010" id="2010">
+                        <label for="2010" class="yearButton">2010</label>
+                        
+                        <input type="radio" name="year" value="2020" id="2020" checked>
+                        <label for="2020" class="yearButton">2020</label>
+                    </form>
+                </div>
+                <div class="food_selection">Choose Food Items:
+                    <form class="formstyle" id="food_form">
+                        <input type="checkbox" name="food" value="rice" id="rice" checked>
+                        <label for="rice" class="foodButton">rice</label>
+                        
+                        <input type="checkbox" name="food" value="apple" id="apple" checked>
+                        <label for="apple" class="foodButton">apple</label>
+                        
+                        <input type="checkbox" name="food" value="egg" id="egg">
+                        <label for="egg" class="foodButton">egg</label>
+
+                        <input type="checkbox" name="food" value="lettuce" id="lettuce">
+                        <label for="lettuce" class="foodButton">lettuce</label>
+
+                        <input type="checkbox" name="food" value="corn" id="corn">
+                        <label for="corn" class="foodButton">corn</label>
+                    </form>
+                </div>
+                <div class="country_selection">Choose Countries:<sub>(fixed for now)</sub>
+                    <form class="formstyle" id="country_form">
+                        <input type="checkbox" name="country" value="a" id="a" checked disabled>
+                        <label for="a" class="countryButton">country a</label>
+                        
+                        <input type="checkbox" name="country" value="b" id="b" checked disabled>
+                        <label for="b" class="countryButton">country b</label>
+                        
+                        <input type="checkbox" name="country" value="c" id="c" checked disabled>
+                        <label for="c" class="countryButton">country c</label>
+
+                        <input type="checkbox" name="country" value="d" id="d" disabled>
+                        <label for="d" class="countryButton">country d</label>
+
+                        <input type="checkbox" name="country" value="e" id="e" disabled>
+                        <label for="e" class="countryButton">country e</label>
+
+                        <input type="checkbox" name="country" value="f" id="f" disabled>
+                        <label for="f" class="countryButton">country f</label>
+                    </form>
+                </div>
+            </div>
+            <div id="container" class="svg-container">
+            </div>
         </div>
     </body>
 </html>

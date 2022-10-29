@@ -3,13 +3,20 @@ h1 {
     margin-top: 0px;
 }
 
+.mainLayout {
+    display: flex;
+    padding-left: 50px;
+}
+
 .year_selection {
     text-align: center;
     font-size: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     margin-top: 10px;
+    padding-left: 10px;
 }
 
 .yearButton {
@@ -19,10 +26,14 @@ h1 {
     text-align: center;
     padding: 10px 24px;
     font-size: 18px;
+    margin: 2px;
 }
 
 .formstyle {
     margin-left: 10px;
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .yearButton:hover {
@@ -49,9 +60,10 @@ input[type=radio]:checked + label{
     text-align: center;
     font-size: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 23px;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 40px;
+    padding-left: 10px;
 }
 
 .foodButton {
@@ -62,6 +74,7 @@ input[type=radio]:checked + label{
     padding: 10px 24px;
     text-transform: uppercase;
     font-size: 15px;
+    margin: 2px;
 }
 
 .foodButton:hover {
@@ -80,6 +93,37 @@ input[type=checkbox] {
 }
 
 input[type=checkbox]:checked + label{
+    background-color: black;
+    color: white;
+}
+
+.country_selection {
+    text-align: center;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 40px;
+    padding-left: 10px;
+}
+
+.countryButton {
+    background-color: white;
+    border-radius: 20px;
+    color: black;
+    text-align: center;
+    padding: 10px 24px;
+    text-transform: uppercase;
+    font-size: 15px;
+    margin: 2px;
+}
+
+.countryButton:hover {
+    background-color: rgb(61, 53, 53);
+    color: white;
+}
+
+.countryButton:active {
     background-color: black;
     color: white;
 }
