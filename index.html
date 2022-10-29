@@ -14,7 +14,7 @@
             <h1>Food Price and Poverty Trend in the World</h1>
         </header>
         <div class="year_selection">Chose Year:
-            <form class="formstyle" id="form">
+            <form class="formstyle" id="year_form">
                 <input type="radio" name="year" value="2000" id="2000">
                 <label for="2000" class="yearButton">2000</label>
                 
@@ -25,8 +25,19 @@
                 <label for="2020" class="yearButton">2020</label>
             </form>
         </div>
+        <div class="food_selection">Chose Food Item:
+            <form class="formstyle" id="food_form">
+                <input type="checkbox" name="food" value="rice" id="rice" checked>
+                <label for="rice" class="foodButton">rice</label>
+                
+                <input type="checkbox" name="food" value="apple" id="apple" checked>
+                <label for="apple" class="foodButton">apple</label>
+                
+                <input type="checkbox" name="food" value="egg" id="egg">
+                <label for="egg" class="foodButton">egg</label>
+            </form>
+        </div>
         <div id="container" class="svg-container">
-
         </div>
     </body>
 </html>

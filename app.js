@@ -62,7 +62,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('y2',maxHeight/2-lineLength);
         line1.append('text')
             .attr('x',maxWidth/2-30)
-            .attr('y',maxHeight/2-lineLength-15)
+            .attr('y',maxHeight/2-lineLength-10)
             .attr('stroke','black')
             .attr('font-family','sans-serif')
             .attr('font-size','18px')
