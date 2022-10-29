@@ -121,4 +121,15 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('r',lineLength/4)
             .attr('cx',maxWidth/2)
             .attr('cy',maxHeight/2);
+
+        /// Trying interactive ///
+        d3.selectAll('line')
+            .on('mouseover', function(){
+                d3.select(this)
+                    .style('stroke-width',5);
+            })
+            .on('mouseout', function(){
+                d3.select(this)
+                    .style('stroke-width',2);
+            });
     });
