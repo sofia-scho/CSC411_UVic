@@ -66,8 +66,16 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('stroke','black')
             .attr('font-family','sans-serif')
             .attr('font-size','18px')
-            .text('Country A');
+            .text('Chad');
         
+        // Rice Point Chad //
+        line1.append('circle')
+            .attr('cx',maxWidth/2)
+            .attr('cy',(maxHeight/2)-16.92 )
+            .attr('r', 5)
+            .style('fill', '#69b3a2')
+
+      
         /// LINE 2 ///
         let line2 = svg.append('g')
                         .attr('transform', function(d,i){
@@ -86,8 +94,16 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('stroke','black')
             .attr('font-family','sans-serif')
             .attr('font-size','18px')
-            .text('Country B');
+            .text('Japan');
+
+        /// Japan Rice Point ///
         
+        line2.append('circle')
+            .attr('cx', maxWidth/2 - 268.68*Math.cos(incline))
+            .attr('cy', maxHeight/2+(Math.sqrt(Math.pow(268.68,2)-Math.pow(268.68,2)*Math.pow(Math.cos(incline),2))) )
+            .attr('r', 5)
+            .style('fill', '#69b3a2')
+            
         /// LINE 3 ///
         let line3 = svg.append('g')
                         .attr('transform', function(d,i){
@@ -106,7 +122,14 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('stroke','black')
             .attr('font-family','sans-serif')
             .attr('font-size','18px')
-            .text('Country C');
+            .text('Mexico');
+
+        line3.append('circle')
+            .attr('cx', maxWidth/2 + 18.12*Math.cos(incline))
+            .attr('cy', maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)))
+            .attr('r',5)
+            .style('fill', '#69b3a2')
+
         
         /// POVERTY CIRCLE LINE ///
         let povertyLine = svg.append('g')
@@ -121,6 +144,10 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('r',lineLength/4)
             .attr('cx',maxWidth/2)
             .attr('cy',maxHeight/2);
+
+        //Rice points //
+
+
 
         /// Trying interactive ///
         d3.selectAll('line')
