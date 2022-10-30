@@ -55,7 +55,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                         });
         line1.append('line')
             .style('stroke','#e7e1ef')
-            .style('stroke-width',2)
+            .style('stroke-width',3)
             .attr('x1',maxWidth/2)
             .attr('y1',maxHeight/2)
             .attr('x2',maxWidth/2)
@@ -83,7 +83,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                         });
         line2.append('line')
             .style('stroke','#e7e1ef')
-            .style('stroke-width',2)
+            .style('stroke-width',3)
             .attr('x1',maxWidth/2)
             .attr('y1',maxHeight/2)
             .attr('x2',maxWidth/2-(lineLength*Math.cos(incline)))
@@ -97,7 +97,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .text('Japan');
 
         /// Japan Rice Point ///
-        
         line2.append('circle')
             .attr('cx', maxWidth/2 - 268.68*Math.cos(incline))
             .attr('cy', maxHeight/2+(Math.sqrt(Math.pow(268.68,2)-Math.pow(268.68,2)*Math.pow(Math.cos(incline),2))) )
@@ -111,7 +110,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                         });
         line3.append('line')
             .style('stroke','#e7e1ef')
-            .style('stroke-width',2)
+            .style('stroke-width',3)
             .attr('x1',maxWidth/2)
             .attr('y1',maxHeight/2)
             .attr('x2',maxWidth/2+(lineLength*Math.cos(incline)))
@@ -123,12 +122,42 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('font-family','sans-serif')
             .attr('font-size','18px')
             .text('Mexico');
-
+        
+        // Mexico Rice point
         line3.append('circle')
             .attr('cx', maxWidth/2 + 18.12*Math.cos(incline))
             .attr('cy', maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)))
             .attr('r',5)
             .style('fill', '#69b3a2')
+
+        //Rice Connected Line //
+        let riceLines = svg.append('g')
+                        .attr('transform', function(d,i){
+                            return 'translate(0,0)';
+                        });
+        riceLines.append('line')
+            .style('stroke','#69b3a2')
+            .style('stroke-width',2)
+            .attr('x1',maxWidth/2)
+            .attr('y1',(maxHeight/2)-16.92)
+            .attr('x2',maxWidth/2 - 268.68*Math.cos(incline))
+            .attr('y2',maxHeight/2+(Math.sqrt(Math.pow(268.68,2)-Math.pow(268.68,2)*Math.pow(Math.cos(incline),2))));
+        
+        riceLines.append('line')
+            .style('stroke','#69b3a2')
+            .style('stroke-width',2)
+            .attr('x1',maxWidth/2)
+            .attr('y1',(maxHeight/2)-16.92)
+            .attr('x2',maxWidth/2 + 18.12*Math.cos(incline))
+            .attr('y2',maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)));
+
+        riceLines.append('line')
+            .style('stroke','#69b3a2')
+            .style('stroke-width',2)
+            .attr('x1',maxWidth/2 - 268.68*Math.cos(incline))
+            .attr('y1',maxHeight/2+(Math.sqrt(Math.pow(268.68,2)-Math.pow(268.68,2)*Math.pow(Math.cos(incline),2))))
+            .attr('x2',maxWidth/2 + 18.12*Math.cos(incline))
+            .attr('y2',maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)));
 
         
         /// POVERTY CIRCLE LINE ///
@@ -144,10 +173,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('r',lineLength/4)
             .attr('cx',maxWidth/2)
             .attr('cy',maxHeight/2);
-
-        //Rice points //
-
-
 
         /// Trying interactive ///
         d3.selectAll('line')
