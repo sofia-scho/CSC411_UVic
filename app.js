@@ -1,11 +1,5 @@
-/*
-const Dummy_Data = [
-    {id: 'd1', value: 10, region:'USA'},
-    {id: 'd2', value: 11, region:'India'},
-    {id: 'd3', value: 15, region:'Canada'},
-    {id: 'd4', value: 12, region:'China'},
-];
 
+/*
 const xScale = d3.scaleBand()
                 .domain(Dummy_Data.map((dataPoint) => dataPoint.region))
                 .rangeRound([0,250])
@@ -35,6 +29,17 @@ setTimeout(() => {
 
 */
 
+var foodPrices = [];
+for (const foodItem of ['RICE','APPLE','EGG','LETTUCE','CORN']) {
+    for (const c of ['Chad','Japan','Mexico']){
+        for (let year = 2011; year<=2020; year++){
+            foodPrices.push({foodName: foodItem, country: c, year: year, cost: Math.round(Math.random()*19 + 1)})
+        }
+    }
+}
+console.log(foodPrices);
+
+
 const maxWidth = 800;
 const maxHeight = 700;
 const lineLength = 300;
@@ -42,7 +47,7 @@ const incline = 0.5235987756;
 
 d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_poverty.csv")
     .then(function(this_data){
-        let svg = d3.select('div#container')
+        let svg = d3.select('div#container1')
                     .append('svg')
                     .attr('width', maxWidth)
                     .attr('height', maxHeight)
@@ -66,6 +71,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('stroke','black')
             .attr('font-family','sans-serif')
             .attr('font-size','18px')
+            .classed('countryName',true)
             .text('Chad');
         
         // Rice Point Chad //
@@ -73,7 +79,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('cx',maxWidth/2)
             .attr('cy',(maxHeight/2)-16.92 )
             .attr('r', 5)
-            .style('fill', '#69b3a2')
+            .style('fill', '#003f5c')
 
       
         /// LINE 2 ///
@@ -94,6 +100,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('stroke','black')
             .attr('font-family','sans-serif')
             .attr('font-size','18px')
+            .classed('countryName',true)
             .text('Japan');
 
         /// Japan Rice Point ///
@@ -101,7 +108,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('cx', maxWidth/2 - 268.68*Math.cos(incline))
             .attr('cy', maxHeight/2+(Math.sqrt(Math.pow(268.68,2)-Math.pow(268.68,2)*Math.pow(Math.cos(incline),2))) )
             .attr('r', 5)
-            .style('fill', '#69b3a2')
+            .style('fill', '#003f5c')
             
         /// LINE 3 ///
         let line3 = svg.append('g')
@@ -121,6 +128,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('stroke','black')
             .attr('font-family','sans-serif')
             .attr('font-size','18px')
+            .classed('countryName',true)
             .text('Mexico');
         
         // Mexico Rice point
@@ -128,7 +136,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('cx', maxWidth/2 + 18.12*Math.cos(incline))
             .attr('cy', maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)))
             .attr('r',5)
-            .style('fill', '#69b3a2')
+            .style('fill', '#003f5c')
 
         //Rice Connected Line //
         let riceLines = svg.append('g')
@@ -136,7 +144,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                             return 'translate(0,0)';
                         });
         riceLines.append('line')
-            .style('stroke','#69b3a2')
+            .style('stroke','#003f5c')
             .style('stroke-width',2)
             .attr('x1',maxWidth/2)
             .attr('y1',(maxHeight/2)-16.92)
@@ -144,7 +152,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('y2',maxHeight/2+(Math.sqrt(Math.pow(268.68,2)-Math.pow(268.68,2)*Math.pow(Math.cos(incline),2))));
         
         riceLines.append('line')
-            .style('stroke','#69b3a2')
+            .style('stroke','#003f5c')
             .style('stroke-width',2)
             .attr('x1',maxWidth/2)
             .attr('y1',(maxHeight/2)-16.92)
@@ -152,7 +160,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('y2',maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)));
 
         riceLines.append('line')
-            .style('stroke','#69b3a2')
+            .style('stroke','#003f5c')
             .style('stroke-width',2)
             .attr('x1',maxWidth/2 - 268.68*Math.cos(incline))
             .attr('y1',maxHeight/2+(Math.sqrt(Math.pow(268.68,2)-Math.pow(268.68,2)*Math.pow(Math.cos(incline),2))))
@@ -184,4 +192,47 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                 d3.select(this)
                     .style('stroke-width',2);
             });
-    });
+        
+        //// POVERTY ////
+        const parsedPovertyData = this_data.map(item => {
+            return {Entity: item.Entity, Year: parseInt(item.Year), PovPopulation: +(parseFloat(item.PovPopulation).toFixed(2))};
+        });
+        
+        var poverties = parsedPovertyData.filter(obj => {
+            return (obj.Entity == 'Chad' || obj.Entity == 'Japan' || obj.Entity == 'Mexico') && (obj.Year>2011);
+        });
+        
+        poverties.push({Entity: 'Chad', Year: 2011, PovPopulation: 55.43});
+        poverties.push({Entity: 'Chad', Year: 2015, PovPopulation: 30.43});
+        poverties.push({Entity: 'Chad', Year: 2020, PovPopulation: 28.43});
+        poverties.push({Entity: 'Japan', Year: 2011, PovPopulation: 2.5});
+        poverties.push({Entity: 'Japan', Year: 2015, PovPopulation: 0.854});
+        poverties.push({Entity: 'Japan', Year: 2020, PovPopulation: 1.45});
+        poverties.push({Entity: 'Mexico', Year: 2011, PovPopulation: 15.322});
+        poverties.push({Entity: 'Mexico', Year: 2015, PovPopulation: 11.5});
+
+        console.log(poverties);
+
+        var thisCountryName;
+        d3.selectAll('.countryName')
+            .on('mouseover', function(){
+                thisCountryName = this.textContent;
+                d3.select(this)
+                    .text(function(){
+                        var selectedYear = parseInt(document.querySelector("input[type='radio'][name='year']:checked").value);
+                        var pov = poverties.find(obj => 
+                            obj.Entity == thisCountryName &&
+                            obj.Year == selectedYear);
+                        return `${this.textContent}: ${pov.PovPopulation}%`;
+                    })
+                    .attr('transform', 'translate(' + (-this.textContent.length*2) + ',' + 0 + ')')
+                    .classed('povInfo',true);
+            })
+            .on('mouseout', function(){
+                d3.select('.povInfo')
+                    .text(thisCountryName)
+                    .classed('povInfo',false)
+                    .attr('transform','translate(0,0)');
+            });
+    }
+);
