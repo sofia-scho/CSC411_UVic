@@ -16,7 +16,7 @@
         <div class="selections">
             <div class="selection">
                 <p>Choose Year:</p>
-                <form class="formstyle" id="year_form">
+                <form class="formstyle" id="year_form" onchange="onSelectionChange()">
                     <input type="radio" name="year" value="2011" id="2011">
                     <label for="2011" class="yearButton">2011</label>
                     
@@ -29,7 +29,7 @@
             </div>
             <div class="selection">
                 <p>Choose Food Items:</p>
-                <form class="formstyle" id="food_form">
+                <form class="formstyle" id="food_form" onchange="onSelectionChange()">
                     <input type="checkbox" name="food" value="rice" id="rice" checked>
                     <label for="rice" class="foodButton" id="foodButton1">rice</label>
                     
