@@ -124,6 +124,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('font-size','18px')
             .text('Mexico');
 
+        // Mexico Rice Point //
         line3.append('circle')
             .attr('cx', maxWidth/2 + 18.12*Math.cos(incline))
             .attr('cy', maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)))
