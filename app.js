@@ -23,6 +23,12 @@ let svg = d3.select('div#container1')
             .attr('height', maxHeight)
             .style('background-color', 'white'); //#fde0dd
 
+svg.append('g')
+    .attr('transform', function(d,i){
+        return 'translate(0,0)';
+    })
+    .attr('id','povertyCircle');
+
 /// LINE 1 ///
 let line1 = svg.append('g')
                 .attr('transform', function(d,i){
@@ -31,6 +37,7 @@ let line1 = svg.append('g')
 line1.append('line')
     .style('stroke','#e7e1ef')
     .style('stroke-width',3)
+    .attr('id','line1')
     .attr('x1',maxWidth/2)
     .attr('y1',maxHeight/2)
     .attr('x2',maxWidth/2)
@@ -93,6 +100,7 @@ let line2 = svg.append('g')
 line2.append('line')
     .style('stroke','#e7e1ef')
     .style('stroke-width',3)
+    .attr('id','line2')
     .attr('x1',maxWidth/2)
     .attr('y1',maxHeight/2)
     .attr('x2',maxWidth/2-(lineLength*Math.cos(incline)))
@@ -152,6 +160,7 @@ let line3 = svg.append('g')
 line3.append('line')
     .style('stroke','#e7e1ef')
     .style('stroke-width',3)
+    .attr('id','line3')
     .attr('x1',maxWidth/2)
     .attr('y1',maxHeight/2)
     .attr('x2',maxWidth/2+(lineLength*Math.cos(incline)))
@@ -326,14 +335,177 @@ function onSelectionChange(){
         });
 }
 
+/// Trying interactive ///
+d3.selectAll('line')
+    .on('mouseover', function(){
+        d3.select(this)
+            .style('stroke-width',5);
+
+        let margin = 40;
+        let width = 480;
+        let height = 480;
+                
+        let trend_svg = d3.select('div#container2')
+                            .append('svg')
+                            .attr('id','foodTrend')
+                            .attr('width', width + 2*margin)
+                            .attr('height', height + 2*margin)
+                            .style('background-color', 'white')
+                            .append('g')
+                            .attr('transform','translate('+(margin+20)+','+margin+')');
+        
+        var x = d3.scaleLinear()
+                    .domain([2011,2020])
+                    .range([0, width]);
+        trend_svg.append('g')
+            .attr('transform','translate(0,'+height+')')
+            .call(d3.axisBottom(x));
+        
+        var y = d3.scaleLinear()
+                    .domain([1,30])
+                    .range([height, 0]);
+        trend_svg.append('g')
+            .call(d3.axisLeft(y));
+        
+        //// X Axis Label ////
+        trend_svg.append('g')
+                .append('text')
+                .attr('text-anchor','end')
+                .attr('x', width/2)
+                .attr('y', height+35)
+                .attr('transform','translate(0,0)')
+                .style('font-size',15)
+                .style('font-weight','bold')
+                .text('Years');
+        
+        //// Y Axis Labell ////
+        trend_svg.append('g')
+                .append('text')
+                .attr('text-anchor','end')
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('transform','translate(-30,200) rotate(-90)')
+                .style('font-size',15)
+                .style('font-weight','bold')
+                .text('Cost ($)');
+
+        ///// User Food Selections /////
+        var current_foods = Array.from(document.querySelectorAll("input[type='checkbox'][name='food']:checked"))
+                            .map(obj => obj.value);
+        ///// DATA /////
+        var trend_data;
+        if (this.id == 'line1'){
+            //// TITLE of graph ////
+            trend_svg.append('g')
+                    .append('text')
+                    .attr('x',150)
+                    .attr('y',0)
+                    .attr('transform','translate(0,0)')
+                    .style('font-size',15)
+                    .style('font-weight','bold')
+                    .text('Trend of food item prices in Chad');
+            trend_data = foodPrices.filter(obj => obj.country == 'Chad' &&
+                                                    current_foods.includes(obj.foodName));
+        }
+        else if (this.id == 'line2'){
+            //// TITLE of graph ////
+            trend_svg.append('g')
+                    .append('text')
+                    .attr('x',150)
+                    .attr('y',0)
+                    .attr('transform','translate(0,0)')
+                    .style('font-size',15)
+                    .style('font-weight','bold')
+                    .text('Trend of food item prices in Japan');
+            trend_data = foodPrices.filter(obj => obj.country == 'Japan' &&
+                                                    current_foods.includes(obj.foodName));
+        }
+        else{
+            //// TITLE of graph ////
+            trend_svg.append('g')
+                    .append('text')
+                    .attr('x',150)
+                    .attr('y',0)
+                    .attr('transform','translate(0,0)')
+                    .style('font-size',15)
+                    .style('font-weight','bold')
+                    .text('Trend of food item prices in Mexico');
+            trend_data = foodPrices.filter(obj => obj.country == 'Mexico' &&
+                                                    current_foods.includes(obj.foodName));
+        }
+        
+        trend_svg
+            .append('g')
+            .append('path')
+                .datum(trend_data.filter(obj => obj.foodName=='rice'))
+                .attr('d',d3.line()
+                            .x(function(d){ return x(+d.year)})
+                            .y(function(d){ return y(+d.cost)})
+                            )
+                .attr('stroke','#003f5c')
+                .style('stroke-width',2)
+                .style('fill','none');        
+        
+        trend_svg
+            .append('g')
+            .append('path')
+                .datum(trend_data.filter(obj => obj.foodName=='apple'))
+                .attr('d',d3.line()
+                            .x(function(d){ return x(+d.year)})
+                            .y(function(d){ return y(+d.cost)})
+                            )
+                .attr('stroke','#58508d')
+                .style('stroke-width',2)
+                .style('fill','none');
+        
+        trend_svg
+            .append('g')
+            .append('path')
+                .datum(trend_data.filter(obj => obj.foodName=='egg'))
+                .attr('d',d3.line()
+                            .x(function(d){ return x(+d.year)})
+                            .y(function(d){ return y(+d.cost)})
+                            )
+                .attr('stroke','#bc5090')
+                .style('stroke-width',2)
+                .style('fill','none');
+        
+        trend_svg
+            .append('g')
+            .append('path')
+                .datum(trend_data.filter(obj => obj.foodName=='lettuce'))
+                .attr('d',d3.line()
+                            .x(function(d){ return x(+d.year)})
+                            .y(function(d){ return y(+d.cost)})
+                            )
+                .attr('stroke','#ff6361')
+                .style('stroke-width',2)
+                .style('fill','none');
+        
+        trend_svg
+            .append('g')
+            .append('path')
+                .datum(trend_data.filter(obj => obj.foodName=='corn'))
+                .attr('d',d3.line()
+                            .x(function(d){ return x(+d.year)})
+                            .y(function(d){ return y(+d.cost)})
+                            )
+                .attr('stroke','#ffa600')
+                .style('stroke-width',2)
+                .style('fill','none');
+    })
+    .on('mouseout', function(){
+        d3.select(this)
+            .style('stroke-width',2);
+        d3.select('#foodTrend')
+            .remove();
+    });
+
 d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_poverty.csv")
     .then(function(this_data){
         /// POVERTY CIRCLE LINE ///
-        let povertyLine = svg.append('g')
-            .attr('transform', function(d,i){
-                return 'translate(0,0)';
-            });
-        povertyLine.append('circle')
+        svg.select('#povertyCircle')
+            .append('circle')
             .style('stroke','black')
             .style('stroke-width',1)
             .style('stroke-dasharray',15)
@@ -341,17 +513,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('r',ylineScale1(21.8))
             .attr('cx',maxWidth/2)
             .attr('cy',maxHeight/2);
-
-        /// Trying interactive ///
-        d3.selectAll('line')
-            .on('mouseover', function(){
-                d3.select(this)
-                    .style('stroke-width',5);
-            })
-            .on('mouseout', function(){
-                d3.select(this)
-                    .style('stroke-width',2);
-            });
         
         //// POVERTY ////
         const parsedPovertyData = this_data.map(item => {
