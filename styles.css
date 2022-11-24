@@ -4,6 +4,10 @@ h1 {
     margin-bottom: 0px;
 }
 
+.viz {
+    display: flex;
+}
+
 .selections {
     display: flex;
     justify-content: space-around;
