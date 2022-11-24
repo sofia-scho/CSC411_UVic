@@ -1,6 +1,44 @@
+function wrap(text, width) {
+    text.each(function () {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            x = text.attr("x"),
+            y = text.attr("y"),
+            dy = 0, //parseFloat(text.attr("dy")),
+            tspan = text.text(null)
+                        .append("tspan")
+                        .attr("x", x)
+                        .attr("y", y)
+                        .attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan")
+                            .attr("x", x)
+                            .attr("y", y)
+                            .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                            .text(word);
+            }
+        }
+    });
+}
+
+
+
+
+
+
 var foodPrices = [];
 for (const foodItem of ['rice','apple','egg','lettuce','corn']) {
-    for (const c of ['Chad','Japan','Mexico']){
+    for (const c of ['Developed','Under-Developed','Developing']){
         for (let year = 2011; year<=2020; year++){
             foodPrices.push({foodName: foodItem, country: c, year: year, cost: Math.round(Math.random()*24 + 1)})
         }
@@ -43,13 +81,13 @@ line1.append('line')
     .attr('x2',maxWidth/2)
     .attr('y2',maxHeight/2-lineLength);
 line1.append('text')
-    .attr('x',maxWidth/2-30)
+    .attr('x',maxWidth/2-40)
     .attr('y',maxHeight/2-lineLength-10)
     .attr('stroke','black')
     .attr('font-family','sans-serif')
     .attr('font-size','18px')
     .classed('countryName',true)
-    .text('Chad');
+    .text('Developed');
 
 var default_selected_foods = Array.from(document.querySelectorAll("input[type='checkbox'][name='food']:checked"))
                                         .map(obj => obj.value);
@@ -57,7 +95,7 @@ var default_selected_foods = Array.from(document.querySelectorAll("input[type='c
 // Plotting CHAD food points //
 line1.selectAll('.country1')
     .data(foodPrices.filter(obj => 
-            obj.country == 'Chad' &&
+            obj.country == 'Developed' &&
             obj.year == parseInt(document.querySelector("input[type='radio'][name='year']:checked").value) &&
             default_selected_foods.includes(obj.foodName)))
     .enter()
@@ -84,7 +122,7 @@ line1.selectAll('.country1')
             }
     });
 
-// linear scales for Japan
+// linear scales for Developing
 const xlineScale2 = d3.scaleLinear()
                         .domain([1,25])
                         .range([maxWidth/2, maxWidth/2-(lineLength*Math.cos(incline))]);
@@ -112,12 +150,12 @@ line2.append('text')
     .attr('font-family','sans-serif')
     .attr('font-size','18px')
     .classed('countryName',true)
-    .text('Japan');
+    .text('Developing');
 
-// Plotting Japan food points //
+// Plotting Developing food points //
 line2.selectAll('.country2')
     .data(foodPrices.filter(obj => 
-            obj.country == 'Japan' &&
+            obj.country == 'Developing' &&
             obj.year == parseInt(document.querySelector("input[type='radio'][name='year']:checked").value) &&
             default_selected_foods.includes(obj.foodName)))
     .enter()
@@ -144,7 +182,7 @@ line2.selectAll('.country2')
             }
     });
 
-// linear scales for Mexico
+// linear scales for Under-Developed
 const xlineScale3 = d3.scaleLinear()
                         .domain([1,25])
                         .range([maxWidth/2, maxWidth/2+(lineLength*Math.cos(incline))]);
@@ -166,18 +204,18 @@ line3.append('line')
     .attr('x2',maxWidth/2+(lineLength*Math.cos(incline)))
     .attr('y2',maxHeight/2+(Math.sqrt(Math.pow(lineLength,2)-Math.pow(lineLength*Math.cos(incline),2))));
 line3.append('text')
-    .attr('x',maxWidth/2+(lineLength*Math.cos(incline))+10)
+    .attr('x',maxWidth/2+(lineLength*Math.cos(incline))-2)
     .attr('y',maxHeight/2+(Math.sqrt(Math.pow(lineLength,2)-Math.pow(lineLength*Math.cos(incline),2)))+30)
     .attr('stroke','black')
     .attr('font-family','sans-serif')
     .attr('font-size','18px')
     .classed('countryName',true)
-    .text('Mexico');
+    .text('Under-Developed');
         
-// Plotting Mexico food points //
+// Plotting Under-Developed food points //
 line3.selectAll('.country3')
     .data(foodPrices.filter(obj => 
-            obj.country == 'Mexico' &&
+            obj.country == 'Under-Developed' &&
             obj.year == parseInt(document.querySelector("input[type='radio'][name='year']:checked").value) &&
             default_selected_foods.includes(obj.foodName)))
     .enter()
@@ -249,7 +287,7 @@ function onSelectionChange(){
     
     line1.selectAll('.country1')
         .data(foodPrices.filter(obj =>
-                obj.country == 'Chad' &&
+                obj.country == 'Developed' &&
                 obj.year == current_year &&
                 current_foods.includes(obj.foodName)))
         .enter()
@@ -278,7 +316,7 @@ function onSelectionChange(){
     
     line2.selectAll('.country2')
         .data(foodPrices.filter(obj =>
-                obj.country == 'Japan' &&
+                obj.country == 'Developing' &&
                 obj.year == current_year &&
                 current_foods.includes(obj.foodName)))
         .enter()
@@ -307,7 +345,7 @@ function onSelectionChange(){
     
     line3.selectAll('.country3')
         .data(foodPrices.filter(obj =>
-                obj.country == 'Mexico' &&
+                obj.country == 'Under-Developed' &&
                 obj.year == current_year &&
                 current_foods.includes(obj.foodName)))
         .enter()
@@ -403,8 +441,8 @@ d3.selectAll('line')
                     .attr('transform','translate(0,0)')
                     .style('font-size',15)
                     .style('font-weight','bold')
-                    .text('Trend of food item prices in Chad');
-            trend_data = foodPrices.filter(obj => obj.country == 'Chad' &&
+                    .text('Trend of food item prices in Developed Countries');
+            trend_data = foodPrices.filter(obj => obj.country == 'Developed' &&
                                                     current_foods.includes(obj.foodName));
         }
         else if (this.id == 'line2'){
@@ -416,8 +454,8 @@ d3.selectAll('line')
                     .attr('transform','translate(0,0)')
                     .style('font-size',15)
                     .style('font-weight','bold')
-                    .text('Trend of food item prices in Japan');
-            trend_data = foodPrices.filter(obj => obj.country == 'Japan' &&
+                    .text('Trend of food item prices in Developing countries');
+            trend_data = foodPrices.filter(obj => obj.country == 'Developing' &&
                                                     current_foods.includes(obj.foodName));
         }
         else{
@@ -429,8 +467,8 @@ d3.selectAll('line')
                     .attr('transform','translate(0,0)')
                     .style('font-size',15)
                     .style('font-weight','bold')
-                    .text('Trend of food item prices in Mexico');
-            trend_data = foodPrices.filter(obj => obj.country == 'Mexico' &&
+                    .text('Trend of food item prices in Under-Developed countries');
+            trend_data = foodPrices.filter(obj => obj.country == 'Under-Developed' &&
                                                     current_foods.includes(obj.foodName));
         }
         
@@ -534,26 +572,40 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
 
         console.log(poverties);
 
-        var thisCountryName;
         d3.selectAll('.countryName')
             .on('mouseover', function(){
-                thisCountryName = this.textContent;
-                d3.select(this)
-                    .text(function(){
-                        var selectedYear = parseInt(document.querySelector("input[type='radio'][name='year']:checked").value);
-                        var pov = poverties.find(obj => 
-                            obj.Entity == thisCountryName &&
-                            obj.Year == selectedYear);
-                        return `${this.textContent}: ${pov.PovPopulation}%`;
-                    })
-                    .attr('transform', 'translate(' + (-this.textContent.length*2) + ',' + 0 + ')')
-                    .classed('povInfo',true);
+                let countryTypeInfo = d3.select('div#container2')
+                            .append('svg')
+                            .attr('id','countryTypeInformation')
+                            .attr('width', 500)
+                            .attr('height', 500)
+                            .style('background-color', 'white')
+                            .append('g')
+                            .attr('transform','translate(0,0)');
+                var str = 'The countries under the '+this.textContent+' Category:\n';
+                if (this.textContent == 'Under-Developed'){
+                        str += 'Chad, Burundi';
+                }
+                else if (this.textContent == 'Developed'){
+                        str += 'Japan and South Africa.'
+                }
+                else {
+                    str += 'Haiti and ...'
+                }
+                countryTypeInfo.append('g')
+                                .append('text')
+                                .attr('x',30)
+                                .attr('y',250)
+                                .attr('transform','translate(0,0)')
+                                .style('font-size',25)
+                                .style('font-weight','bold')
+                                .text(str)
+                                .call(wrap,470);
+
             })
             .on('mouseout', function(){
-                d3.select('.povInfo')
-                    .text(thisCountryName)
-                    .classed('povInfo',false)
-                    .attr('transform','translate(0,0)');
+                d3.select('#countryTypeInformation')
+                    .remove();
             });
     }
 );
