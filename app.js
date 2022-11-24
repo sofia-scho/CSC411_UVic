@@ -359,7 +359,7 @@ d3.selectAll('line')
                     .range([0, width]);
         trend_svg.append('g')
             .attr('transform','translate(0,'+height+')')
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x).tickFormat(d3.format('d')));
         
         var y = d3.scaleLinear()
                     .domain([1,30])
