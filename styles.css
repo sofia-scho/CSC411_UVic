@@ -156,15 +156,15 @@ input[type=checkbox]:checked + label#foodButton5{
 }
 
 .progress-bar {
-    fill: #ddd;
+    fill: rgb(35, 186, 209);
   }
   
   .progress-bar-bg {
-    fill: #3f3f3f;
+    fill: #b62c8a;
   }
   
   .progress-label {
-    fill: #aaa;
+    fill: rgb(136, 30, 152);
     font-family: 'Open Sans', sans-serif;
     font-size: 20px;
     text-anchor: middle;
