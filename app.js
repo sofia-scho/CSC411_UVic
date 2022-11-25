@@ -31,7 +31,36 @@ function wrap(text, width) {
     });
 }
 
+function arcTweenOld(transition, percent, oldValue) {
+    transition.attrTween("d", function (d) {
 
+        var newAngle=(percent/100)*(2*Math.PI);
+
+        var interpolate = d3.interpolate(d.endAngle, newAngle);
+
+        var interpolateCount = d3.interpolate(oldValue, percent);
+
+
+        return function (t) {
+            d.endAngle = interpolate(t);
+            var pathForegroundCircle = arcLine(d);
+
+            middleTextCount.text(Math.floor(interpolateCount(t))+'%');
+
+            var pathDummyCircle = arcDummy(d);
+
+            console.log(pathDummyCircle);
+
+            var coordinate = pathDummyCircle.split("L")[1].split("A")[0];
+
+            console.log(coordinate);
+
+            endCircle.attr('transform', 'translate(' + coordinate+ ')');
+
+            return pathForegroundCircle;
+        };
+    });
+};  
 
 
 
@@ -260,9 +289,29 @@ riceLines.append('line')
             .style('stroke','#003f5c')
             .style('stroke-width',2)
             .attr('x1',maxWidth/2)
+<<<<<<< HEAD
+            .attr('y1',maxHeight/2)
+            .attr('x2',maxWidth/2+(lineLength*Math.cos(incline)))
+            .attr('y2',maxHeight/2+(Math.sqrt(Math.pow(lineLength,2)-Math.pow(lineLength*Math.cos(incline),2))));
+        line3.append('text')
+            .attr('x',maxWidth/2+(lineLength*Math.cos(incline))+10)
+            .attr('y',maxHeight/2+(Math.sqrt(Math.pow(lineLength,2)-Math.pow(lineLength*Math.cos(incline),2)))+30)
+            .attr('stroke','black')
+            .attr('font-family','sans-serif')
+            .attr('font-size','18px')
+            .text('Mexico');
+
+        // Mexico Rice Point //
+        line3.append('circle')
+            .attr('cx', maxWidth/2 + 18.12*Math.cos(incline))
+            .attr('cy', maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)))
+            .attr('r',5)
+            .style('fill', '#69b3a2')
+=======
             .attr('y1',(maxHeight/2)-16.92)
             .attr('x2',maxWidth/2 + 18.12*Math.cos(incline))
             .attr('y2',maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)));
+>>>>>>> 21335fa35ea620b6c3f3da852a3ecff4bd4d8fdc
 
 riceLines.append('line')
             .style('stroke','#003f5c')
@@ -721,7 +770,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                         str += 'Japan and South Africa.'
                 }
                 else {
-                    str += 'Haiti and ...'
+                    str += 'Haiti, Mexico, and Argentina'
                 }
                 countryTypeInfo.append('g')
                                 .append('text')
@@ -733,10 +782,227 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                                 .text(str)
                                 .call(wrap,300);
 
+
+                                var width1 = 150;
+                                var height1 = 150;
+
+                                function radialProgress() {
+                                    
+                                    //const parent = d3.select(selector)
+                                    //const size = parent.node().getBoundingClientRect()
+                                    //const svg = parent.append('svg')
+                                     // .attr('width', size.width)
+                                     // .attr('height', size.height);
+                                    const outerRadius = Math.min(width1, height1) * 0.45;
+                                    const thickness = 10;
+                                    let value = 0;
+                                    
+                                    const mainArc = d3.arc()
+                                      .startAngle(0)
+                                      .endAngle(Math.PI * 2)
+                                      .innerRadius(outerRadius-thickness)
+                                      .outerRadius(outerRadius)
+                                  
+                                    countryTypeInfo.append("path")
+                                      .attr('class', 'progress-bar-bg')
+                                      .attr('transform', `translate(200,200)`)
+                                      .attr('d', mainArc())
+                                    
+                                    const mainArcPath = countryTypeInfo.append("path")
+                                      .attr('class', 'progress-bar')
+                                      .attr('transform', 'translate(200,200)')
+                                    
+                                    countryTypeInfo.append("circle")
+                                      .attr('class', 'progress-bar')
+                                      .attr('transform', `translate(200,${200-outerRadius+thickness/2})`)
+                                      .attr('width', thickness)
+                                      .attr('height', thickness)
+                                      .attr('r', thickness/2)
+                                  
+                                    const end = countryTypeInfo.append("circle")
+                                      .attr('class', 'progress-bar')
+                                      .attr('transform', `translate(200,${200-outerRadius+thickness/2})`)
+                                      .attr('width', thickness)
+                                      .attr('height', thickness)
+                                      .attr('r', thickness/2)
+                                    
+                                    let percentLabel = countryTypeInfo.append("text")
+                                      .attr('class', 'progress-label')
+                                      .attr('transform', `translate(200,200)`)
+                                      .text('0')
+                                  
+                                    return {
+                                      update: function(progressPercent) {
+                                        const startValue = value
+                                        const startAngle = Math.PI * startValue / 50
+                                        const angleDiff = Math.PI * progressPercent / 50 - startAngle;
+                                        const startAngleDeg = startAngle / Math.PI * 180
+                                        const angleDiffDeg = angleDiff / Math.PI * 180
+                                        const transitionDuration = 1500
+                                  
+                                        mainArcPath.transition().duration(transitionDuration).attrTween('d', function(){
+                                          return function(t) {
+                                            mainArc.endAngle(startAngle + angleDiff * t)
+                                            return mainArc();
+                                          }
+                                        })
+                                        end.transition().duration(transitionDuration).attrTween('transform', function(){
+                                          return function(t) {
+                                            return `translate(200,200)`+
+                                              `rotate(${(startAngleDeg + angleDiffDeg * t)})`+
+                                              `translate(0,-${outerRadius-thickness/2})`
+                                          }
+                                        })
+                                        percentLabel.transition().duration(transitionDuration).tween('bla', function() {
+                                          return function(t) {
+                                            percentLabel.text(Math.round(startValue + (progressPercent - startValue) * t));
+                                          }
+                                        })
+                                        value = progressPercent
+                                      }
+                                    }
+                                  }
+                                  
+                                  let chart = radialProgress()
+                                  //let progress = [100,0,5,20,35,70,90,100,0]
+                                  //let state = 0
+                                  d3.interval(function(){
+                                    chart.update(66)
+                                    console.log("!!!")
+                                    //state = (state + 1) % progress.length
+                                  }, 2000)
+                                  
+
+                                /*
+                
+                                var percent = 55;
+
+                                var w=300,h=320;
+                            
+                                var outerRadius=(w/2)-10;
+                                var innerRadius=outerRadius-8;
+                            
+                            
+                                var color = ['#ec1561','#2a3a46','#202b33'];
+                            
+                                var arc=d3.svg.arc()
+                                        .innerRadius(innerRadius)
+                                        .outerRadius(outerRadius)
+                                        .startAngle(0)
+                                        .endAngle(2*Math.PI);
+                            
+                                //The circle is following this
+                                var arcDummy=d3.svg.arc()
+                                        .innerRadius((outerRadius-innerRadius)/2+innerRadius)
+                                        .outerRadius((outerRadius-innerRadius)/2+innerRadius)
+                                        .startAngle(0);
+                            
+                            
+                                var arcLine=d3.svg.arc()
+                                        .innerRadius(innerRadius)
+                                        .outerRadius(outerRadius)
+                                        .startAngle(0);
+                            /*
+                                var svg=d3.select("#chart")
+                                        .append("svg")
+                                        .attr({
+                                            width:w,
+                                            height:h,
+                                            class:'shadow'
+                                        }).append('g')
+                                        .attr({
+                                            transform:'translate('+w/2+','+h/2+')'
+                                        });
+                                        
+                            
+                            
+                                //background
+                                countryTypeInfo.append('path')
+                                        .attr({
+                                            d:arc
+                                        })
+                                        .style({
+                                            fill:color[1]
+                                        });
+                            
+                            
+                                vcountryTypeInfo.append('path')
+                                        .datum({endAngle:0})
+                                        .attr({
+                                            d:arcLine
+                                        })
+                                        .style({
+                                            fill:color[0]
+                                        });
+                            
+                                //Dummy Arc for Circle
+                                countryTypeInfo.append('path')
+                                        .datum({endAngle:0})
+                                        .attr({
+                                            d:arcDummy
+                                        }).style({
+                                            fill:color[0]
+                                        });
+                            
+                                countryTypeInfo.append('circle')
+                                        .attr({
+                                            r:12,
+                                            transform:'translate(0,'+ (-outerRadius+15) +')'
+                                        })
+                                        .style({
+                                            stroke:color[0],
+                                            'stroke-width':8,
+                                            fill:color[2]
+                                        });
+                            
+                                countryTypeInfo.append('text')
+                                        .datum(0)
+                                        .text(function(d){
+                                            return d+'%';
+                                        })
+                            
+                                        .attr({
+                                            class:'middleText',
+                                            'text-anchor':'middle',
+                                            dy:25,
+                                            dx:0
+                                        })
+                                        .style({
+                                            fill:'#ec1561',
+                                            'font-size':'80px'
+                            
+                                        });
+                            
+                            
+                                
+                               
+                                 
+                                var animate=function(){
+                                    pathChart.transition()
+                                            .duration(750)
+                                            .ease('cubic')
+                                            .call(arcTween,((2*Math.PI))*ratio, percent, oldValue);
+                                 
+                                 
+                                };
+                                 
+                                 
+                                setTimeout(animate,0);
+
+                                */
+               
+
+                
+
             })
+            
             .on('mouseout', function(){
+                /*
                 d3.select('#countryTypeInformation')
                     .remove();
+                */
+                
             });
+            
     }
 );
