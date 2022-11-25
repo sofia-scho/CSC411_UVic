@@ -644,12 +644,105 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                 countryTypeInfo.append('g')
                                 .append('text')
                                 .attr('x',30)
-                                .attr('y',250)
+                                .attr('y',50)
                                 .attr('transform','translate(0,0)')
                                 .style('font-size',25)
                                 .style('font-weight','bold')
                                 .text(str)
                                 .call(wrap,470);
+
+
+                                var width1 = 100;
+                                var height1 = 100;
+
+                                function radialProgress() {
+                                    
+                                    //const parent = d3.select(selector)
+                                    //const size = parent.node().getBoundingClientRect()
+                                    //const svg = parent.append('svg')
+                                     // .attr('width', size.width)
+                                     // .attr('height', size.height);
+                                    const outerRadius = Math.min(width1, height1) * 0.45;
+                                    const thickness = 10;
+                                    let value = 0;
+                                    
+                                    const mainArc = d3.arc()
+                                      .startAngle(0)
+                                      .endAngle(Math.PI * 2)
+                                      .innerRadius(outerRadius-thickness)
+                                      .outerRadius(outerRadius)
+                                  
+                                    countryTypeInfo.append("path")
+                                      .attr('class', 'progress-bar-bg')
+                                      .attr('transform', `translate(250,300)`)
+                                      .attr('d', mainArc())
+                                    
+                                    const mainArcPath = countryTypeInfo.append("path")
+                                      .attr('class', 'progress-bar')
+                                      .attr('transform', 'translate(250,300)')
+                                    
+                                    countryTypeInfo.append("circle")
+                                      .attr('class', 'progress-bar')
+                                      .attr('transform', `translate(250,${300-outerRadius+thickness/2})`)
+                                      .attr('width', thickness)
+                                      .attr('height', thickness)
+                                      .attr('r', thickness/2)
+                                  
+                                    const end = countryTypeInfo.append("circle")
+                                      .attr('class', 'progress-bar')
+                                      .attr('transform', `translate(250,${300-outerRadius+thickness/2})`)
+                                      .attr('width', thickness)
+                                      .attr('height', thickness)
+                                      .attr('r', thickness/2)
+                                    
+                                    let percentLabel = countryTypeInfo.append("text")
+                                      .attr('class', 'progress-label')
+                                      .attr('transform', `translate(250,300)`)
+                                      .text('0')
+                                  
+                                    return {
+                                      update: function(progressPercent) {
+                                        const startValue = value
+                                        const startAngle = Math.PI * startValue / 50
+                                        const angleDiff = Math.PI * progressPercent / 50 - startAngle;
+                                        const startAngleDeg = startAngle / Math.PI * 180
+                                        const angleDiffDeg = angleDiff / Math.PI * 180
+                                        const transitionDuration = 1500
+                                  
+                                        mainArcPath.transition().duration(transitionDuration).attrTween('d', function(){
+                                          return function(t) {
+                                            mainArc.endAngle(startAngle + angleDiff * t)
+                                            return mainArc();
+                                          }
+                                        })
+                                        end.transition().duration(transitionDuration).attrTween('transform', function(){
+                                          return function(t) {
+                                            return `translate(250,300)`+
+                                              `rotate(${(startAngleDeg + angleDiffDeg * t)})`+
+                                              `translate(0,-${outerRadius-thickness/2})`
+                                          }
+                                        })
+                                        percentLabel.transition().duration(transitionDuration).tween('bla', function() {
+                                          return function(t) {
+                                            percentLabel.text(Math.round(startValue + (progressPercent - startValue) * t));
+                                          }
+                                        })
+                                        value = progressPercent
+                                      }
+                                    }
+                                  }
+                                  
+                                  let chart = radialProgress()
+                                  let progress = [100,0,5,20,35,70,90,100,0]
+                                  let state = 0
+                                  d3.interval(function(){
+                                    chart.update(progress[state])
+                                    console.log("!!!")
+                                    state = (state + 1) % progress.length
+                                  }, 2000)
+                                  
+
+                                /*
                 
                                 var percent = 55;
 
@@ -689,7 +782,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                                         .attr({
                                             transform:'translate('+w/2+','+h/2+')'
                                         });
-                                        */
+                                        
                             
                             
                                 //background
@@ -764,6 +857,8 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                                  
                                  
                                 setTimeout(animate,0);
+
+                                */
                
 
                 
