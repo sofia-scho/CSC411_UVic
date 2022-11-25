@@ -422,15 +422,140 @@ function onSelectionChange(){
         });
 }
 
+
+
+//// Default ////
+let margin = 40;
+let width = 480;
+let height = 480;
+
+let trend_svg = d3.select('div#container2')
+                            .append('svg')
+                            .attr('id','foodTrend')
+                            .attr('width', width + 2*margin)
+                            .attr('height', height + 2*margin)
+                            .style('background-color', 'white')
+                            .append('g')
+                            .attr('transform','translate('+(margin+20)+','+margin+')');
+        
+var x = d3.scaleLinear()
+            .domain([2011,2020])
+            .range([0, width]);
+trend_svg.append('g')
+        .attr('transform','translate(0,'+height+')')
+        .call(d3.axisBottom(x).tickFormat(d3.format('d')));
+        
+var y = d3.scaleLinear()
+            .domain([1,30])
+            .range([height, 0]);
+trend_svg.append('g')
+        .call(d3.axisLeft(y));
+        
+//// X Axis Label ////
+trend_svg.append('g')
+        .append('text')
+        .attr('text-anchor','end')
+        .attr('x', width/2)
+        .attr('y', height+35)
+        .attr('transform','translate(0,0)')
+        .style('font-size',15)
+        .style('font-weight','bold')
+        .text('Years');
+        
+//// Y Axis Labell ////
+trend_svg.append('g')
+        .append('text')
+        .attr('text-anchor','end')
+        .attr('x', 0)
+        .attr('y', 0)
+        .attr('transform','translate(-30,200) rotate(-90)')
+        .style('font-size',15)
+        .style('font-weight','bold')
+        .text('Cost ($)');
+
+var current_foods = Array.from(document.querySelectorAll("input[type='checkbox'][name='food']:checked"))
+                        .map(obj => obj.value);
+
+trend_svg.append('g')
+        .append('text')
+        .attr('x',100)
+        .attr('y',0)
+        .attr('transform','translate(0,0)')
+        .style('font-size',15)
+        .style('font-weight','bold')
+        .text('Trend of food item prices in Developed Countries')
+        .call(wrap,300);
+trend_data = foodPrices.filter(obj => obj.country == 'Developed' &&
+                                current_foods.includes(obj.foodName));
+
+trend_svg
+        .append('g')
+        .append('path')
+        .datum(trend_data.filter(obj => obj.foodName=='rice'))
+        .attr('d',d3.line()
+            .x(function(d){ return x(+d.year)})
+            .y(function(d){ return y(+d.cost)})
+        )
+        .attr('stroke','#003f5c')
+        .style('stroke-width',2)
+        .style('fill','none');
+                            
+trend_svg
+        .append('g')
+        .append('path')
+        .datum(trend_data.filter(obj => obj.foodName=='apple'))
+        .attr('d',d3.line()
+                .x(function(d){ return x(+d.year)})
+                .y(function(d){ return y(+d.cost)})
+            )
+        .attr('stroke','#58508d')
+        .style('stroke-width',2)
+        .style('fill','none');
+                            
+trend_svg
+        .append('g')
+        .append('path')
+        .datum(trend_data.filter(obj => obj.foodName=='egg'))
+        .attr('d',d3.line()
+                    .x(function(d){ return x(+d.year)})
+                    .y(function(d){ return y(+d.cost)})
+            )
+        .attr('stroke','#bc5090')
+        .style('stroke-width',2)
+        .style('fill','none');
+                            
+trend_svg
+        .append('g')
+        .append('path')
+        .datum(trend_data.filter(obj => obj.foodName=='lettuce'))
+        .attr('d',d3.line()
+                    .x(function(d){ return x(+d.year)})
+                    .y(function(d){ return y(+d.cost)})
+            )
+        .attr('stroke','#ff6361')
+        .style('stroke-width',2)
+        .style('fill','none');
+                            
+trend_svg
+        .append('g')
+        .append('path')
+        .datum(trend_data.filter(obj => obj.foodName=='corn'))
+        .attr('d',d3.line()
+                    .x(function(d){ return x(+d.year)})
+                    .y(function(d){ return y(+d.cost)})
+            )
+        .attr('stroke','#ffa600')
+        .style('stroke-width',2)
+        .style('fill','none');
+
 /// Trying interactive ///
 d3.selectAll('line')
     .on('mouseover', function(){
         d3.select(this)
             .style('stroke-width',5);
 
-        let margin = 40;
-        let width = 480;
-        let height = 480;
+        d3.select('#foodTrend')
+            .remove();
                 
         let trend_svg = d3.select('div#container2')
                             .append('svg')
@@ -485,12 +610,13 @@ d3.selectAll('line')
             //// TITLE of graph ////
             trend_svg.append('g')
                     .append('text')
-                    .attr('x',150)
+                    .attr('x',100)
                     .attr('y',0)
                     .attr('transform','translate(0,0)')
                     .style('font-size',15)
                     .style('font-weight','bold')
-                    .text('Trend of food item prices in Developed Countries');
+                    .text('Trend of food item prices in Developed Countries')
+                    .call(wrap,300);
             trend_data = foodPrices.filter(obj => obj.country == 'Developed' &&
                                                     current_foods.includes(obj.foodName));
         }
@@ -498,12 +624,13 @@ d3.selectAll('line')
             //// TITLE of graph ////
             trend_svg.append('g')
                     .append('text')
-                    .attr('x',150)
+                    .attr('x',100)
                     .attr('y',0)
                     .attr('transform','translate(0,0)')
                     .style('font-size',15)
                     .style('font-weight','bold')
-                    .text('Trend of food item prices in Developing countries');
+                    .text('Trend of food item prices in Developing countries')
+                    .call(wrap,300);
             trend_data = foodPrices.filter(obj => obj.country == 'Developing' &&
                                                     current_foods.includes(obj.foodName));
         }
@@ -511,12 +638,13 @@ d3.selectAll('line')
             //// TITLE of graph ////
             trend_svg.append('g')
                     .append('text')
-                    .attr('x',150)
+                    .attr('x',100)
                     .attr('y',0)
                     .attr('transform','translate(0,0)')
                     .style('font-size',15)
                     .style('font-weight','bold')
-                    .text('Trend of food item prices in Under-Developed countries');
+                    .text('Trend of food item prices in Under-Developed countries')
+                    .call(wrap,300);
             trend_data = foodPrices.filter(obj => obj.country == 'Under-Developed' &&
                                                     current_foods.includes(obj.foodName));
         }
@@ -528,10 +656,10 @@ d3.selectAll('line')
                 .attr('d',d3.line()
                             .x(function(d){ return x(+d.year)})
                             .y(function(d){ return y(+d.cost)})
-                            )
+                    )
                 .attr('stroke','#003f5c')
                 .style('stroke-width',2)
-                .style('fill','none');        
+                .style('fill','none');
         
         trend_svg
             .append('g')
@@ -540,7 +668,7 @@ d3.selectAll('line')
                 .attr('d',d3.line()
                             .x(function(d){ return x(+d.year)})
                             .y(function(d){ return y(+d.cost)})
-                            )
+                    )
                 .attr('stroke','#58508d')
                 .style('stroke-width',2)
                 .style('fill','none');
@@ -584,8 +712,6 @@ d3.selectAll('line')
     .on('mouseout', function(){
         d3.select(this)
             .style('stroke-width',2);
-        d3.select('#foodTrend')
-            .remove();
     });
 
 d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_poverty.csv")
@@ -623,14 +749,19 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
 
         d3.selectAll('.countryName')
             .on('mouseover', function(){
-                let countryTypeInfo = d3.select('div#container2')
+                let countryTypeInfo = d3.select('div#container1')
                             .append('svg')
                             .attr('id','countryTypeInformation')
-                            .attr('width', 500)
-                            .attr('height', 500)
+                            .style('position','absolute')
+                            .style('z-index','10')
+                            .attr('opacity',1)
+                            .attr('width', 400)
+                            .attr('height', 300)
                             .style('background-color', 'white')
-                            .append('g')
-                            .attr('transform','translate(0,0)');
+                            .attr('transform','translate(0,150)')
+                            .style("border", "solid")
+                            .style("border-width", "2px")
+                            .style("border-radius", "5px");
                 var str = 'The countries under the '+this.textContent+' Category:\n';
                 if (this.textContent == 'Under-Developed'){
                         str += 'Chad, Burundi';
@@ -643,13 +774,17 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                 }
                 countryTypeInfo.append('g')
                                 .append('text')
+<<<<<<< HEAD
                                 .attr('x',30)
+=======
+                                .attr('x',50)
+>>>>>>> c6638ff359ff07a23fb07050c5a3e87ff4afa8e4
                                 .attr('y',50)
                                 .attr('transform','translate(0,0)')
-                                .style('font-size',25)
+                                .style('font-size',15)
                                 .style('font-weight','bold')
                                 .text(str)
-                                .call(wrap,470);
+                                .call(wrap,300);
 
 
                                 var width1 = 100;
