@@ -774,11 +774,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                 }
                 countryTypeInfo.append('g')
                                 .append('text')
-<<<<<<< HEAD
-                                .attr('x',30)
-=======
                                 .attr('x',50)
->>>>>>> c6638ff359ff07a23fb07050c5a3e87ff4afa8e4
                                 .attr('y',50)
                                 .attr('transform','translate(0,0)')
                                 .style('font-size',15)
