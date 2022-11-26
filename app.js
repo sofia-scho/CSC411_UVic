@@ -177,8 +177,7 @@ riceLines.append('line')
             .attr('y2',maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)));
 */
 
-d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodFinal.csv")
-    .then(function(this_data){
+d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodFinal.csv", function(this_data){
         foodPrices = this_data;
         console.log(foodPrices);
         var default_selected_foods = Array.from(document.querySelectorAll("input[type='checkbox'][name='food']:checked"))
@@ -201,13 +200,13 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                         return '#003f5c';
                     }
                     else if (data.foodName == 'Wheat flour'){
-                        return '#58508d';
+                        return '#7a5195';
                     }
                     else if (data.foodName == 'Meat'){
-                        return '#bc5090';
+                        return '#ef5675';
                     }
                     else if (data.foodName == 'Potatoes'){
-                        return '#ff6361';
+                        return '#ffa600';
                     }
                     else{
                         return '#ffa600';
@@ -231,13 +230,13 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                         return '#003f5c';
                     }
                     else if (data.foodName == 'Wheat flour'){
-                        return '#58508d';
+                        return '#7a5195';
                     }
                     else if (data.foodName == 'Meat'){
-                        return '#bc5090';
+                        return '#ef5675';
                     }
                     else if (data.foodName == 'Potatoes'){
-                        return '#ff6361';
+                        return '#ffa600';
                     }
                     else{
                         return '#ffa600';
@@ -261,13 +260,13 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                         return '#003f5c';
                     }
                     else if (data.foodName == 'Wheat flour'){
-                        return '#58508d';
+                        return '#7a5195';
                     }
                     else if (data.foodName == 'Meat'){
-                        return '#bc5090';
+                        return '#ef5675';
                     }
                     else if (data.foodName == 'Potatoes'){
-                        return '#ff6361';
+                        return '#ffa600';
                     }
                     else{
                         return '#ffa600';
@@ -358,7 +357,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                         .x(function(d){ return x(+d.year)})
                         .y(function(d){ return y(+d.cost)})
                     )
-                .attr('stroke','#58508d')
+                .attr('stroke','#7a5195')
                 .style('stroke-width',2)
                 .style('fill','none');
                                     
@@ -370,7 +369,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                             .x(function(d){ return x(+d.year)})
                             .y(function(d){ return y(+d.cost)})
                     )
-                .attr('stroke','#bc5090')
+                .attr('stroke','#ef5675')
                 .style('stroke-width',2)
                 .style('fill','none');
                                     
@@ -382,7 +381,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                             .x(function(d){ return x(+d.year)})
                             .y(function(d){ return y(+d.cost)})
                     )
-                .attr('stroke','#ff6361')
+                .attr('stroke','#ffa600')
                 .style('stroke-width',2)
                 .style('fill','none');
                                     
@@ -519,7 +518,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                                     .x(function(d){ return x(+d.year)})
                                     .y(function(d){ return y(+d.cost)})
                             )
-                        .attr('stroke','#58508d')
+                        .attr('stroke','#7a5195')
                         .style('stroke-width',2)
                         .style('fill','none');
                 
@@ -531,7 +530,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                                     .x(function(d){ return x(+d.year)})
                                     .y(function(d){ return y(+d.cost)})
                                     )
-                        .attr('stroke','#bc5090')
+                        .attr('stroke','#ef5675')
                         .style('stroke-width',2)
                         .style('fill','none');
                 
@@ -543,7 +542,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                                     .x(function(d){ return x(+d.year)})
                                     .y(function(d){ return y(+d.cost)})
                                     )
-                        .attr('stroke','#ff6361')
+                        .attr('stroke','#ffa600')
                         .style('stroke-width',2)
                         .style('fill','none');
                 
@@ -594,13 +593,13 @@ function onSelectionChange(){
                         return '#003f5c';
                     }
                     if (data.foodName == 'Wheat flour'){
-                        return '#58508d';
+                        return '#7a5195';
                     }
                     if (data.foodName == 'Meat'){
-                        return '#bc5090';
+                        return '#ef5675';
                     }
                     if (data.foodName == 'Potatoes'){
-                        return '#ff6361';
+                        return '#ffa600';
                     }
                     else{
                         return '#ffa600';
@@ -623,13 +622,13 @@ function onSelectionChange(){
                         return '#003f5c';
                     }
                     if (data.foodName == 'Wheat flour'){
-                        return '#58508d';
+                        return '#7a5195';
                     }
                     if (data.foodName == 'Meat'){
-                        return '#bc5090';
+                        return '#ef5675';
                     }
                     if (data.foodName == 'Potatoes'){
-                        return '#ff6361';
+                        return '#ffa600';
                     }
                     else{
                         return '#ffa600';
@@ -652,13 +651,13 @@ function onSelectionChange(){
                         return '#003f5c';
                     }
                     if (data.foodName == 'Wheat flour'){
-                        return '#58508d';
+                        return '#7a5195';
                     }
                     if (data.foodName == 'Meat'){
-                        return '#bc5090';
+                        return '#ef5675';
                     }
                     if (data.foodName == 'Potatoes'){
-                        return '#ff6361';
+                        return '#ffa600';
                     }
                     else{
                         return '#ffa600';
@@ -666,9 +665,25 @@ function onSelectionChange(){
                 });
 }
 
+/// Annotations ///
+const annotations = [{
+    note: {
+        label: 'People can afford items within this circle',
+        bgPadding: {'top':15, 'left':10, 'right':10,'bottom':10},
+        title: 'Poverty Baseline'
+    },
+    x: 345,
+    y: 295,
+    dy: -100,
+    dx: -100,
+    connector: {end: 'arrow'}
+}];
 
-d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_poverty.csv")
-    .then(function(this_data){
+const makeAnnotations = d3.annotation()
+                            .type(d3.annotationCallout)
+                            .annotations(annotations);
+
+d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_poverty.csv", function(pov_data){
         /// POVERTY CIRCLE LINE ///
         svg.select('#povertyCircle')
             .append('circle')
@@ -680,8 +695,12 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .attr('cx',maxWidth/2)
             .attr('cy',maxHeight/2);
         
+        svg.append('g')
+            .attr('class','annotation-group')
+            .call(makeAnnotations)
+        
         //// POVERTY ////
-        const parsedPovertyData = this_data.map(item => {
+        const parsedPovertyData = pov_data.map(item => {
             return {Entity: item.Entity, Year: parseInt(item.Year), PovPopulation: +(parseFloat(item.PovPopulation).toFixed(2))};
         });
         
