@@ -670,7 +670,7 @@ const annotations = [{
     note: {
         label: 'People can afford items within this circle',
         bgPadding: {'top':15, 'left':10, 'right':10,'bottom':10},
-        title: 'Poverty Baseline'
+        title: 'Poverty Baseline $2.39(USD)/Day'
     },
     x: 345,
     y: 295,
