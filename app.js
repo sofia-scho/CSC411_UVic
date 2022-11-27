@@ -804,7 +804,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                                     const angleDiff = Math.PI * progressPercent / 50 - startAngle;
                                     const startAngleDeg = startAngle / Math.PI * 180
                                     const angleDiffDeg = angleDiff / Math.PI * 180
-                                    const transitionDuration = 1500
+                                    const transitionDuration = 1000
                                   
                                     mainArcPath.transition().duration(transitionDuration).attrTween('d', function(){
                                       return function(t) {
@@ -835,7 +835,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                             chart.update(66)
                             console.log("!!!")
                             //state = (state + 1) % progress.length
-                  }, 2000)
+                  }, 500)
             })
             
             .on('mouseout', function(){
