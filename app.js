@@ -31,44 +31,7 @@ function wrap(text, width) {
     });
 }
 
-<<<<<<< HEAD
-function arcTweenOld(transition, percent, oldValue) {
-    transition.attrTween("d", function (d) {
-
-        var newAngle=(percent/100)*(2*Math.PI);
-
-        var interpolate = d3.interpolate(d.endAngle, newAngle);
-
-        var interpolateCount = d3.interpolate(oldValue, percent);
-
-
-        return function (t) {
-            d.endAngle = interpolate(t);
-            var pathForegroundCircle = arcLine(d);
-
-            middleTextCount.text(Math.floor(interpolateCount(t))+'%');
-
-            var pathDummyCircle = arcDummy(d);
-
-            console.log(pathDummyCircle);
-
-            var coordinate = pathDummyCircle.split("L")[1].split("A")[0];
-
-            console.log(coordinate);
-
-            endCircle.attr('transform', 'translate(' + coordinate+ ')');
-
-            return pathForegroundCircle;
-        };
-    });
-};  
-
-
-
-
-=======
 /*
->>>>>>> 1f2a36464d1a0efef84471f447f15941ee9363d1
 var foodPrices = [];
 for (const foodItem of ['rice','apple','egg','lettuce','corn']) {
     for (const c of ['Developed','Under-Developed','Developing']){
@@ -201,29 +164,9 @@ riceLines.append('line')
             .style('stroke','#003f5c')
             .style('stroke-width',2)
             .attr('x1',maxWidth/2)
-<<<<<<< HEAD
-            .attr('y1',maxHeight/2)
-            .attr('x2',maxWidth/2+(lineLength*Math.cos(incline)))
-            .attr('y2',maxHeight/2+(Math.sqrt(Math.pow(lineLength,2)-Math.pow(lineLength*Math.cos(incline),2))));
-        line3.append('text')
-            .attr('x',maxWidth/2+(lineLength*Math.cos(incline))+10)
-            .attr('y',maxHeight/2+(Math.sqrt(Math.pow(lineLength,2)-Math.pow(lineLength*Math.cos(incline),2)))+30)
-            .attr('stroke','black')
-            .attr('font-family','sans-serif')
-            .attr('font-size','18px')
-            .text('Mexico');
-
-        // Mexico Rice Point //
-        line3.append('circle')
-            .attr('cx', maxWidth/2 + 18.12*Math.cos(incline))
-            .attr('cy', maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)))
-            .attr('r',5)
-            .style('fill', '#69b3a2')
-=======
             .attr('y1',(maxHeight/2)-16.92)
             .attr('x2',maxWidth/2 + 18.12*Math.cos(incline))
             .attr('y2',maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)));
->>>>>>> 21335fa35ea620b6c3f3da852a3ecff4bd4d8fdc
 
 riceLines.append('line')
             .style('stroke','#003f5c')
@@ -812,23 +755,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                                 .call(wrap,300);
 
 
-<<<<<<< HEAD
-                                var width1 = 150;
-                                var height1 = 150;
-
-                                function radialProgress() {
-                                    
-                                    //const parent = d3.select(selector)
-                                    //const size = parent.node().getBoundingClientRect()
-                                    //const svg = parent.append('svg')
-                                     // .attr('width', size.width)
-                                     // .attr('height', size.height);
-                                    const outerRadius = Math.min(width1, height1) * 0.45;
-                                    const thickness = 10;
-                                    let value = 0;
-                                    
-                                    const mainArc = d3.arc()
-=======
                 var width1 = 150;
                 var height1 = 150;
 
@@ -838,17 +764,12 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                     let value = 0;
                                     
                     const mainArc = d3.arc()
->>>>>>> 1f2a36464d1a0efef84471f447f15941ee9363d1
                                       .startAngle(0)
                                       .endAngle(Math.PI * 2)
                                       .innerRadius(outerRadius-thickness)
                                       .outerRadius(outerRadius)
                                   
-<<<<<<< HEAD
-                                    countryTypeInfo.append("path")
-=======
                     countryTypeInfo.append("path")
->>>>>>> 1f2a36464d1a0efef84471f447f15941ee9363d1
                                       .attr('class', 'progress-bar-bg')
                                       .attr('transform', `translate(200,200)`)
                                       .attr('d', mainArc())
