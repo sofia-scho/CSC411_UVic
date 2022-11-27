@@ -721,6 +721,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
 
         d3.selectAll('.countryName')
             .on('mouseover', function(){
+                var countryNameAnimate = this.textContent;
                 let countryTypeInfo = d3.select('div#container1')
                             .append('svg')
                             .attr('id','countryTypeInformation')
@@ -737,6 +738,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                 var str = 'The countries under the '+this.textContent+' Category are ';
                 if (this.textContent == 'Under-Developed'){
                         str += 'Chad, Burundi.\nThe average percentage of these countries\' population living below the poverty baseline:\n'
+                        
                 }
                 else if (this.textContent == 'Developed'){
                         str += 'Japan and South Africa.\nThe average percentage of these countries\' population living below the poverty baseline:\n'
@@ -805,7 +807,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                                     const angleDiff = Math.PI * progressPercent / 50 - startAngle;
                                     const startAngleDeg = startAngle / Math.PI * 180
                                     const angleDiffDeg = angleDiff / Math.PI * 180
-                                    const transitionDuration = 1000
+                                    const transitionDuration = 500
                                   
                                     mainArcPath.transition().duration(transitionDuration).attrTween('d', function(){
                                       return function(t) {
@@ -830,13 +832,28 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                         }
                     }
                     let chart = radialProgress()
+                    
                     //let progress = [100,0,5,20,35,70,90,100,0]
                     //let state = 0
+                    
                     d3.interval(function(){
-                            chart.update(66)
-                            console.log("!!!")
+                        
+                        if(countryNameAnimate == 'Under-Developed'){
+                            chart.update(78)
+                        }
+                        
+                        else if(countryNameAnimate == 'Developed'){
+                            chart.update(20)
+                        }
+                        else if (countryNameAnimate == 'Developing'){
+                            chart.update(33)
+                        }
+                        
+                            //chart.update(50)
+                            
                             //state = (state + 1) % progress.length
                   }, 500)
+                  
             })
             
             .on('mouseout', function(){
