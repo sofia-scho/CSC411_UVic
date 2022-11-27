@@ -670,7 +670,7 @@ const annotations = [{
     note: {
         label: 'People can afford items within this circle',
         bgPadding: {'top':15, 'left':10, 'right':10,'bottom':10},
-        title: 'Poverty Baseline'
+        title: 'Poverty Baseline $2.39(USD)/Day'
     },
     x: 320,
     y: 280,
@@ -721,6 +721,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
 
         d3.selectAll('.countryName')
             .on('mouseover', function(){
+                var countryNameAnimate = this.textContent;
                 let countryTypeInfo = d3.select('div#container1')
                             .append('svg')
                             .attr('id','countryTypeInformation')
@@ -734,16 +735,18 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                             .style("border", "solid")
                             .style("border-width", "2px")
                             .style("border-radius", "5px");
-                var str = 'The countries under the '+this.textContent+' Category:\n';
+                var str = 'The countries under the '+this.textContent+' Category are ';
                 if (this.textContent == 'Under-Developed'){
-                        str += 'Chad, Burundi';
+                        str += 'Chad, Burundi.\nThe average percentage of these countries\' population living below the poverty baseline:\n'
+                        
                 }
                 else if (this.textContent == 'Developed'){
-                        str += 'Japan and South Africa.'
+                        str += 'Japan and South Africa.\nThe average percentage of these countries\' population living below the poverty baseline:\n'
                 }
                 else {
-                    str += 'Haiti, Mexico, and Argentina'
+                    str += 'Haiti, Mexico, and Argentina.\nThe average percentage of these countries\' population living below the poverty baseline:\n'
                 }
+                
                 countryTypeInfo.append('g')
                                 .append('text')
                                 .attr('x',50)
@@ -804,7 +807,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                                     const angleDiff = Math.PI * progressPercent / 50 - startAngle;
                                     const startAngleDeg = startAngle / Math.PI * 180
                                     const angleDiffDeg = angleDiff / Math.PI * 180
-                                    const transitionDuration = 1500
+                                    const transitionDuration = 500
                                   
                                     mainArcPath.transition().duration(transitionDuration).attrTween('d', function(){
                                       return function(t) {
@@ -829,17 +832,37 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                         }
                     }
                     let chart = radialProgress()
+                    
                     //let progress = [100,0,5,20,35,70,90,100,0]
                     //let state = 0
+                    
                     d3.interval(function(){
-                            chart.update(66)
-                            console.log("!!!")
+                        
+                        if(countryNameAnimate == 'Under-Developed'){
+                            chart.update(78)
+                        }
+                        
+                        else if(countryNameAnimate == 'Developed'){
+                            chart.update(20)
+                        }
+                        else if (countryNameAnimate == 'Developing'){
+                            chart.update(33)
+                        }
+                        
+                            //chart.update(50)
+                            
                             //state = (state + 1) % progress.length
-                  }, 2000)
+                  }, 500)
+                  
             })
+            
             .on('mouseout', function(){
+                /*
                 d3.select('#countryTypeInformation')
                     .remove();
+                */
+                
             });
+            
     }
 );
