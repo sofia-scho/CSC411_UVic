@@ -672,8 +672,8 @@ const annotations = [{
         bgPadding: {'top':15, 'left':10, 'right':10,'bottom':10},
         title: 'Poverty Baseline $2.39(USD)/Day'
     },
-    x: 345,
-    y: 295,
+    x: 320,
+    y: 280,
     dy: -100,
     dx: -100,
     connector: {end: 'arrow'}
@@ -691,7 +691,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .style('stroke-width',1)
             .style('stroke-dasharray',15)
             .style('fill','transparent')
-            .attr('r',ylineScale1(6.5))
+            .attr('r',maxHeight/2 - ylineScale1(2.39))
             .attr('cx',maxWidth/2)
             .attr('cy',maxHeight/2);
         
