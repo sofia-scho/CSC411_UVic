@@ -853,210 +853,29 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                                       .attr('transform', `translate(200,200)`)
                                       .attr('d', mainArc())
                                     
-<<<<<<< HEAD
-                                    const mainArcPath = countryTypeInfo.append("path")
-                                      .attr('class', 'progress-bar')
-                                      .attr('transform', 'translate(200,200)')
-                                    
-                                    countryTypeInfo.append("circle")
-=======
                     const mainArcPath = countryTypeInfo.append("path")
                                       .attr('class', 'progress-bar')
                                       .attr('transform', 'translate(200,200)')
                                     
                     countryTypeInfo.append("circle")
->>>>>>> 1f2a36464d1a0efef84471f447f15941ee9363d1
                                       .attr('class', 'progress-bar')
                                       .attr('transform', `translate(200,${200-outerRadius+thickness/2})`)
                                       .attr('width', thickness)
                                       .attr('height', thickness)
                                       .attr('r', thickness/2)
                                   
-<<<<<<< HEAD
-                                    const end = countryTypeInfo.append("circle")
-=======
                     const end = countryTypeInfo.append("circle")
->>>>>>> 1f2a36464d1a0efef84471f447f15941ee9363d1
                                       .attr('class', 'progress-bar')
                                       .attr('transform', `translate(200,${200-outerRadius+thickness/2})`)
                                       .attr('width', thickness)
                                       .attr('height', thickness)
                                       .attr('r', thickness/2)
                                     
-<<<<<<< HEAD
-                                    let percentLabel = countryTypeInfo.append("text")
-=======
                     let percentLabel = countryTypeInfo.append("text")
->>>>>>> 1f2a36464d1a0efef84471f447f15941ee9363d1
                                       .attr('class', 'progress-label')
                                       .attr('transform', `translate(200,200)`)
                                       .text('0')
                                   
-<<<<<<< HEAD
-                                    return {
-                                      update: function(progressPercent) {
-                                        const startValue = value
-                                        const startAngle = Math.PI * startValue / 50
-                                        const angleDiff = Math.PI * progressPercent / 50 - startAngle;
-                                        const startAngleDeg = startAngle / Math.PI * 180
-                                        const angleDiffDeg = angleDiff / Math.PI * 180
-                                        const transitionDuration = 1500
-                                  
-                                        mainArcPath.transition().duration(transitionDuration).attrTween('d', function(){
-                                          return function(t) {
-                                            mainArc.endAngle(startAngle + angleDiff * t)
-                                            return mainArc();
-                                          }
-                                        })
-                                        end.transition().duration(transitionDuration).attrTween('transform', function(){
-                                          return function(t) {
-                                            return `translate(200,200)`+
-                                              `rotate(${(startAngleDeg + angleDiffDeg * t)})`+
-                                              `translate(0,-${outerRadius-thickness/2})`
-                                          }
-                                        })
-                                        percentLabel.transition().duration(transitionDuration).tween('bla', function() {
-                                          return function(t) {
-                                            percentLabel.text(Math.round(startValue + (progressPercent - startValue) * t));
-                                          }
-                                        })
-                                        value = progressPercent
-                                      }
-                                    }
-                                  }
-                                  
-                                  let chart = radialProgress()
-                                  //let progress = [100,0,5,20,35,70,90,100,0]
-                                  //let state = 0
-                                  d3.interval(function(){
-                                    chart.update(66)
-                                    console.log("!!!")
-                                    //state = (state + 1) % progress.length
-                                  }, 2000)
-                                  
-
-                                /*
-                
-                                var percent = 55;
-
-                                var w=300,h=320;
-                            
-                                var outerRadius=(w/2)-10;
-                                var innerRadius=outerRadius-8;
-                            
-                            
-                                var color = ['#ec1561','#2a3a46','#202b33'];
-                            
-                                var arc=d3.svg.arc()
-                                        .innerRadius(innerRadius)
-                                        .outerRadius(outerRadius)
-                                        .startAngle(0)
-                                        .endAngle(2*Math.PI);
-                            
-                                //The circle is following this
-                                var arcDummy=d3.svg.arc()
-                                        .innerRadius((outerRadius-innerRadius)/2+innerRadius)
-                                        .outerRadius((outerRadius-innerRadius)/2+innerRadius)
-                                        .startAngle(0);
-                            
-                            
-                                var arcLine=d3.svg.arc()
-                                        .innerRadius(innerRadius)
-                                        .outerRadius(outerRadius)
-                                        .startAngle(0);
-                            /*
-                                var svg=d3.select("#chart")
-                                        .append("svg")
-                                        .attr({
-                                            width:w,
-                                            height:h,
-                                            class:'shadow'
-                                        }).append('g')
-                                        .attr({
-                                            transform:'translate('+w/2+','+h/2+')'
-                                        });
-                                        
-                            
-                            
-                                //background
-                                countryTypeInfo.append('path')
-                                        .attr({
-                                            d:arc
-                                        })
-                                        .style({
-                                            fill:color[1]
-                                        });
-                            
-                            
-                                vcountryTypeInfo.append('path')
-                                        .datum({endAngle:0})
-                                        .attr({
-                                            d:arcLine
-                                        })
-                                        .style({
-                                            fill:color[0]
-                                        });
-                            
-                                //Dummy Arc for Circle
-                                countryTypeInfo.append('path')
-                                        .datum({endAngle:0})
-                                        .attr({
-                                            d:arcDummy
-                                        }).style({
-                                            fill:color[0]
-                                        });
-                            
-                                countryTypeInfo.append('circle')
-                                        .attr({
-                                            r:12,
-                                            transform:'translate(0,'+ (-outerRadius+15) +')'
-                                        })
-                                        .style({
-                                            stroke:color[0],
-                                            'stroke-width':8,
-                                            fill:color[2]
-                                        });
-                            
-                                countryTypeInfo.append('text')
-                                        .datum(0)
-                                        .text(function(d){
-                                            return d+'%';
-                                        })
-                            
-                                        .attr({
-                                            class:'middleText',
-                                            'text-anchor':'middle',
-                                            dy:25,
-                                            dx:0
-                                        })
-                                        .style({
-                                            fill:'#ec1561',
-                                            'font-size':'80px'
-                            
-                                        });
-                            
-                            
-                                
-                               
-                                 
-                                var animate=function(){
-                                    pathChart.transition()
-                                            .duration(750)
-                                            .ease('cubic')
-                                            .call(arcTween,((2*Math.PI))*ratio, percent, oldValue);
-                                 
-                                 
-                                };
-                                 
-                                 
-                                setTimeout(animate,0);
-
-                                */
-               
-
-                
-
-=======
                     return {
                         update: function(progressPercent) {
                                     const startValue = value
@@ -1096,7 +915,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                             console.log("!!!")
                             //state = (state + 1) % progress.length
                   }, 2000)
->>>>>>> 1f2a36464d1a0efef84471f447f15941ee9363d1
             })
             
             .on('mouseout', function(){
