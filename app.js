@@ -741,7 +741,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                                 .text(str)
                                 .call(wrap,300);
 
-
                 var width1 = 150;
                 var height1 = 150;
 
@@ -816,10 +815,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                         }
                     }
                     let chart = radialProgress()
-                    
-                    //let progress = [100,0,5,20,35,70,90,100,0]
-                    //let state = 0
-                    
                     d3.interval(function(){
                         
                         if(countryNameAnimate == 'Under-Developed'){
@@ -832,20 +827,13 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                         else if (countryNameAnimate == 'Developing'){
                             chart.update(33)
                         }
-                        
-                            //chart.update(50)
-                            
-                            //state = (state + 1) % progress.length
                   }, 500)
                   
             })
             
             .on('mouseout', function(){
-                /*
                 d3.select('#countryTypeInformation')
                     .remove();
-                */
-                
             });
             
     }
