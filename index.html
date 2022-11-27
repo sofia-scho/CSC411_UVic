@@ -18,14 +18,10 @@
             <div class="selection">
                 <p>Choose Year:</p>
                 <form class="formstyle" id="year_form" onchange="onSelectionChange()">
-                    <input type="radio" name="year" value="2011" id="2011">
-                    <label for="2011" class="yearButton">2011</label>
-                    
-                    <input type="radio" name="year" value="2015" id="2015">
-                    <label for="2015" class="yearButton">2015</label>
-                    
-                    <input type="radio" name="year" value="2020" id="2020" checked>
-                    <label for="2020" class="yearButton">2020</label>
+                    <div style="display:flex; align-items: center;">
+                        <span id = "rangeValue">2020</span>
+                        <input type="range" name="year" value="2020" min="2011" max="2020" step="1">
+                    </div>
                 </form>
             </div>
             <div class="selection">
