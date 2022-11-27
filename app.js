@@ -31,16 +31,6 @@ function wrap(text, width) {
     });
 }
 
-/*
-var foodPrices = [];
-for (const foodItem of ['rice','apple','egg','lettuce','corn']) {
-    for (const c of ['Developed','Under-Developed','Developing']){
-        for (let year = 2011; year<=2020; year++){
-            foodPrices.push({foodName: foodItem, country: c, year: year, cost: Math.round(Math.random()*24 + 1)})
-        }
-    }
-}*/
-
 const maxWidth = 800;
 const maxHeight = 700;
 const lineLength = 300;
@@ -146,36 +136,6 @@ line3.append('text')
     .text('Under-Developed');
 
 var foodPrices;
-/*
-//Rice Connected Line //
-let riceLines = svg.append('g')
-                  .attr('transform', function(d,i){
-                      return 'translate(0,0)';
-                });
-riceLines.append('line')
-            .style('stroke','#003f5c')
-            .style('stroke-width',2)
-            .attr('x1',maxWidth/2)
-            .attr('y1',(maxHeight/2)-16.92)
-            .attr('x2',maxWidth/2 - 268.68*Math.cos(incline))
-            .attr('y2',maxHeight/2+(Math.sqrt(Math.pow(268.68,2)-Math.pow(268.68,2)*Math.pow(Math.cos(incline),2))));
-        
-riceLines.append('line')
-            .style('stroke','#003f5c')
-            .style('stroke-width',2)
-            .attr('x1',maxWidth/2)
-            .attr('y1',(maxHeight/2)-16.92)
-            .attr('x2',maxWidth/2 + 18.12*Math.cos(incline))
-            .attr('y2',maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)));
-
-riceLines.append('line')
-            .style('stroke','#003f5c')
-            .style('stroke-width',2)
-            .attr('x1',maxWidth/2 - 268.68*Math.cos(incline))
-            .attr('y1',maxHeight/2+(Math.sqrt(Math.pow(268.68,2)-Math.pow(268.68,2)*Math.pow(Math.cos(incline),2))))
-            .attr('x2',maxWidth/2 + 18.12*Math.cos(incline))
-            .attr('y2',maxHeight/2 + Math.sqrt(Math.pow(18.12,2)-Math.pow(18.12,2)*Math.pow(Math.cos(incline),2)));
-*/
 
 d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodFinal.csv", function(this_data){
         foodPrices = this_data;
@@ -187,7 +147,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
         line1.selectAll('.country1')
             .data(foodPrices.filter(obj => 
                     obj.country == 'Developed' &&
-                    obj.year == parseInt(document.querySelector("input[type='radio'][name='year']:checked").value) &&
+                    obj.year == parseInt(document.querySelector("input[type='range'][name='year']").value) &&
                     default_selected_foods.includes(obj.foodName)))
             .enter()
             .append('circle')
@@ -217,7 +177,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
         line2.selectAll('.country2')
             .data(foodPrices.filter(obj => 
                     obj.country == 'Developing' &&
-                    obj.year == parseInt(document.querySelector("input[type='radio'][name='year']:checked").value) &&
+                    obj.year == parseInt(document.querySelector("input[type='range'][name='year']").value) &&
                     default_selected_foods.includes(obj.foodName)))
             .enter()
             .append('circle')
@@ -247,7 +207,7 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
         line3.selectAll('.country3')
             .data(foodPrices.filter(obj => 
                     obj.country == 'Under-Developed' &&
-                    obj.year == parseInt(document.querySelector("input[type='radio'][name='year']:checked").value) &&
+                    obj.year == parseInt(document.querySelector("input[type='range'][name='year']").value) &&
                     default_selected_foods.includes(obj.foodName)))
             .enter()
             .append('circle')
@@ -321,6 +281,16 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                 .style('font-size',15)
                 .style('font-weight','bold')
                 .text('Cost ($)');
+        
+        trend_svg.append("g")
+                .attr("transform", "translate(0, "+y(2.39)+")")
+                .append("line")
+                .attr("x2", width)
+                .style('stroke','black')
+                .style('stroke-width',1)
+                .style('stroke-dasharray',15)
+                .style('fill','transparent');
+
 
         var current_foods = Array.from(document.querySelectorAll("input[type='checkbox'][name='food']:checked"))
                                 .map(obj => obj.value);
@@ -384,18 +354,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                 .attr('stroke','#ffa600')
                 .style('stroke-width',2)
                 .style('fill','none');
-                                    
-        trend_svg
-                .append('g')
-                .append('path')
-                .datum(trend_data.filter(obj => obj.foodName=='corn'))
-                .attr('d',d3.line()
-                            .x(function(d){ return x(+d.year)})
-                            .y(function(d){ return y(+d.cost)})
-                    )
-                .attr('stroke','#ffa600')
-                .style('stroke-width',2)
-                .style('fill','none');
 
         /// Trying interactive ///
         d3.selectAll('line')
@@ -450,6 +408,15 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                         .style('font-weight','bold')
                         .text('Cost ($)');
 
+                trend_svg.append("g")
+                        .attr("transform", "translate(0, "+y(2.39)+")")
+                        .append("line")
+                        .attr("x2", width)
+                        .style('stroke','black')
+                        .style('stroke-width',1)
+                        .style('stroke-dasharray',15)
+                        .style('fill','transparent');
+                
                 ///// User Food Selections /////
                 var current_foods = Array.from(document.querySelectorAll("input[type='checkbox'][name='food']:checked"))
                                     .map(obj => obj.value);
@@ -545,18 +512,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
                         .attr('stroke','#ffa600')
                         .style('stroke-width',2)
                         .style('fill','none');
-                
-                trend_svg
-                    .append('g')
-                    .append('path')
-                        .datum(trend_data.filter(obj => obj.foodName=='corn'))
-                        .attr('d',d3.line()
-                                    .x(function(d){ return x(+d.year)})
-                                    .y(function(d){ return y(+d.cost)})
-                                    )
-                        .attr('stroke','#ffa600')
-                        .style('stroke-width',2)
-                        .style('fill','none');
             })
             .on('mouseout', function(){
                 d3.select(this)
@@ -566,9 +521,11 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/parsedFoodF
 
 
 function onSelectionChange(){
-            var current_year = parseInt(document.querySelector("input[type='radio'][name='year']:checked").value);
+            var current_year = parseInt(document.querySelector("input[type='range'][name='year']").value);
             var current_foods = Array.from(document.querySelectorAll("input[type='checkbox'][name='food']:checked"))
                                     .map(obj => obj.value);
+            
+            document.querySelector('#rangeValue').innerHTML = current_year;
             
             line1.selectAll('.country1')
                     .remove();
@@ -700,24 +657,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
             .call(makeAnnotations)
         
         //// POVERTY ////
-        const parsedPovertyData = pov_data.map(item => {
-            return {Entity: item.Entity, Year: parseInt(item.Year), PovPopulation: +(parseFloat(item.PovPopulation).toFixed(2))};
-        });
-        
-        var poverties = parsedPovertyData.filter(obj => {
-            return (obj.Entity == 'Chad' || obj.Entity == 'Japan' || obj.Entity == 'Mexico') && (obj.Year>2011);
-        });
-        
-        poverties.push({Entity: 'Chad', Year: 2011, PovPopulation: 55.43});
-        poverties.push({Entity: 'Chad', Year: 2015, PovPopulation: 30.43});
-        poverties.push({Entity: 'Chad', Year: 2020, PovPopulation: 28.43});
-        poverties.push({Entity: 'Japan', Year: 2011, PovPopulation: 2.5});
-        poverties.push({Entity: 'Japan', Year: 2015, PovPopulation: 0.854});
-        poverties.push({Entity: 'Japan', Year: 2020, PovPopulation: 1.45});
-        poverties.push({Entity: 'Mexico', Year: 2011, PovPopulation: 15.322});
-        poverties.push({Entity: 'Mexico', Year: 2015, PovPopulation: 11.5});
-
-        console.log(poverties);
 
         d3.selectAll('.countryName')
             .on('mouseover', function(){
@@ -756,7 +695,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                                 .style('font-weight','bold')
                                 .text(str)
                                 .call(wrap,300);
-
 
                 var width1 = 150;
                 var height1 = 150;
@@ -832,10 +770,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                         }
                     }
                     let chart = radialProgress()
-                    
-                    //let progress = [100,0,5,20,35,70,90,100,0]
-                    //let state = 0
-                    
                     d3.interval(function(){
                         
                         if(countryNameAnimate == 'Under-Developed'){
@@ -848,10 +782,6 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                         else if (countryNameAnimate == 'Developing'){
                             chart.update(33)
                         }
-                        
-                            //chart.update(50)
-                            
-                            //state = (state + 1) % progress.length
                   }, 500)
                   
             })
