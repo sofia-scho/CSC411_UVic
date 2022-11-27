@@ -91,46 +91,46 @@ input[type=checkbox]:checked + label#foodButton1{
 
 /* BUTTON 2 */
 #foodButton2:hover {
-    box-shadow:inset 0px 0px 0px 3px #58508d;
+    box-shadow:inset 0px 0px 0px 3px #7a5195;
 }
 
 #foodButton2:active {
-    background-color: #58508d;
+    background-color: #7a5195;
     color: white;
 }
 
 input[type=checkbox]:checked + label#foodButton2{
-    background-color: #58508d;
+    background-color: #7a5195;
     color: white;
 }
 
 /* BUTTON 3 */
 #foodButton3:hover {
-    box-shadow:inset 0px 0px 0px 3px #bc5090;
+    box-shadow:inset 0px 0px 0px 3px #ef5675;
 }
 
 #foodButton3:active {
-    background-color: #bc5090;
+    background-color: #ef5675;
     color: white;
 }
 
 input[type=checkbox]:checked + label#foodButton3{
-    background-color: #bc5090;
+    background-color: #ef5675;
     color: white;
 }
 
 /* BUTTON 4 */
 #foodButton4:hover {
-    box-shadow:inset 0px 0px 0px 3px #ff6361;
+    box-shadow:inset 0px 0px 0px 3px #ffa600;
 }
 
 #foodButton4:active {
-    background-color: #ff6361;
+    background-color: #ffa600;
     color: white;
 }
 
 input[type=checkbox]:checked + label#foodButton4{
-    background-color: #ff6361;
+    background-color: #ffa600;
     color: white;
 }
 
