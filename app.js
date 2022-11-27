@@ -734,16 +734,17 @@ d3.csv("https://raw.githubusercontent.com/Shake1999/CSC411_UVic/main/world_pover
                             .style("border", "solid")
                             .style("border-width", "2px")
                             .style("border-radius", "5px");
-                var str = 'The countries under the '+this.textContent+' Category:\n';
+                var str = 'The countries under the '+this.textContent+' Category are ';
                 if (this.textContent == 'Under-Developed'){
-                        str += 'Chad, Burundi';
+                        str += 'Chad, Burundi.\nThe average percentage of these countries\' population living below the poverty baseline:\n'
                 }
                 else if (this.textContent == 'Developed'){
-                        str += 'Japan and South Africa.'
+                        str += 'Japan and South Africa.\nThe average percentage of these countries\' population living below the poverty baseline:\n'
                 }
                 else {
-                    str += 'Haiti, Mexico, and Argentina'
+                    str += 'Haiti, Mexico, and Argentina.\nThe average percentage of these countries\' population living below the poverty baseline:\n'
                 }
+                
                 countryTypeInfo.append('g')
                                 .append('text')
                                 .attr('x',50)
